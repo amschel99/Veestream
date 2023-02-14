@@ -1,0 +1,19 @@
+import express from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import { routerVideos } from './routes/videos.js'
+import { router } from './routes/video.js'
+dotenv.config()
+
+const app= express()
+app.use(cors({origin:'*'}))
+const PORT= process.env.PORT
+app.get("/",(req,res)=>{
+    res.send("hello world")
+})
+app.use('/video',router)
+app.use("/videos",routerVideos)
+
+app.listen(PORT, ()=>{
+    console.log(`server up and running`)
+})
