@@ -3,7 +3,7 @@ RUN apt-get update && \
     apt-get install -y ffmpeg
 
 # Install ffprobe from the same package
-RUN ln -s /usr/bin/ffmpeg /usr/bin/ffprobe
+
 WORKDIR /app
 COPY package.json .
 RUN npm install
