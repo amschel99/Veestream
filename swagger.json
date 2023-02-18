@@ -1,0 +1,71 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Veezo",
+      "version": "1.0.0",
+      "description": "This API provides a list of videos and their details"
+    },
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "videos",
+        "description": "Endpoints for managing videos"
+      }
+    ],
+    "paths": {
+      "/videos": {
+        "get": {
+          "tags": [
+            "videos"
+          ],
+          "summary": "Get list of videos",
+          "description": "Returns a list of all available videos with their details.",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Video"
+                }
+              }
+            },
+            "404": {
+              "description": "No videos found"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Video": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "The unique identifier for the video"
+          },
+          "poster": {
+            "type": "string",
+            "description": "The URL for the video's poster image"
+          },
+          "gif": {
+            "type": "string",
+            "description": "The URL for the video's GIF"
+          },
+          "duration": {
+            "type": "string",
+            "description": "The duration of the video"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the video"
+          }
+        }
+      }
+    }
+  }
+  

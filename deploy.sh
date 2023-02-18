@@ -17,4 +17,4 @@ fi
 
 # Run the image in a new container
 echo "Starting stream-app container"
-docker run -v $(pwd):/app:ro -v /app/node_modules --env-file .env -dp 8000:4000 --name stream-app stream-api:1.0
+docker run -v $(pwd):/app -v /app/node_modules --env-file .env -dp 8000:4000 --name stream-app stream-api:1.0
