@@ -1,0 +1,16 @@
+# a service is an equivalent of a container.
+# we can have multiple services/container
+# below the container and one tab to the right, we specify
+# our containers configuration
+version: "3"
+services:
+  veezo:
+    build: . # this builds an image using the Docker file in .
+    ports: # here is the configuration for ports
+      - "4000:8000"
+    volumes: # configuration for volumes
+     - ./:/app
+     - /app/node_modules
+    env_file: # enviromental variable files
+      - ./.env
+      
