@@ -5,5 +5,12 @@ services:
     ports:
      - "8000:4000"
     environment:
-      - PORT=4000 
+      - PORT=4000
+
+  mongo:
+    image: mongo:4.4.18
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=amschel
+      - MONGO_INITDB_ROOT_PASSWORD=iamLehcsma9
+
   
