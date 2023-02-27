@@ -3,6 +3,12 @@ import fs from 'fs'
 
  export const getVideo= async (req,res)=>{
     try{
+
+
+
+
+
+        //check if API key isvalid 
         const video= path.resolve(`./assets/${req.params.id}.mp4`)
         fs.stat(video,(err,stats)=>{
             if(err){

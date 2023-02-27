@@ -5,6 +5,7 @@ export const signUp= async (req,res)=>{
         const apiKey=generateApiKey()
         //save the API key in the database 
 
+
 res.json({apiKey})
     }
     catch(error){
