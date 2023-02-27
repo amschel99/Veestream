@@ -1,10 +1,3 @@
-/*uploading a video to azure cloud platform*/
-const uploadVideo= async ()=>{
-    try{
-
-    } catch(e){
-
-
-
-    }
-}
+import { BlobServiceClient } from "@azure/storage-blob";
+import multer from 'multer'
+import multerAzure from 'multer-azure-blob-storage'
