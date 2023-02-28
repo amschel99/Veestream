@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import { routerVideos } from './routes/videos.js'
 import { router } from './routes/video.js'
 import { routerApiKey } from './routes/apiKey.js'
+import { connectDb } from './db/dbConfig.js'
 import swaggerUi from 'swagger-ui-express'
 import { errorHandler } from './middleware/errorHandler.js'
 import { validateApiKey } from './middleware/validateApiKey.js'
@@ -25,6 +26,14 @@ app.use("/videos",routerVideos)
 
 app.use(errorHandler)
 
-app.listen(PORT, ()=>{
-    console.log(`server up and running`)
-})
+connectDb("mongodb://amschel:iamLehcsma9@mongo:27017/?authSource=admin").
+then(()=>{
+    console.log('db connected successfully')
+    app.listen(PORT, ()=>{
+        console.log(`server up and running`)
+    })
+}).
+catch((e)=>console.log(e.message))
+    
+  
+

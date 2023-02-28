@@ -12,5 +12,10 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=amschel
       - MONGO_INITDB_ROOT_PASSWORD=iamLehcsma9
+    volumes:
+      - mongo-db:/data/db #here we are saying we want to persist this data. the path is where data is stored
+
+volumes:
+  mongo-db:
 
   
