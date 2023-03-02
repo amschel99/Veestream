@@ -27,8 +27,8 @@ try{
       return containerName;
 }
 catch(e){
-    console.log(e.message)
-return null
+   
+return e
   
 }
  

@@ -1,11 +1,14 @@
 import mongoose from 'mongoose'
-export default mongoose.model("video",{
 
-url:{
-    type:String
-},
-apiKey:{
-    type:String
-}
+const  videoSchema=new mongoose.Schema({
 
-})
+    url:{
+        type:String
+    },
+    apiKey:{
+        type:String
+    }
+    
+    })
+    const Video=mongoose.model("Video",videoSchema)
+    export default Video

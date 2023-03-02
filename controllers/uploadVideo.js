@@ -1,8 +1,10 @@
 
 import { BlobServiceClient } from '@azure/storage-blob';
-import multer from 'multer'
-import apiKeyModel from '../models/apiKey';
-
+import multer from 'multer';
+import accountModel from '../models/apiKey.js';
+import dotenv from 'dotenv'
+import e from 'express';
+dotenv.config()
 const connectionString = process.env.AZURE_CONNECTION_STRING
 
 const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
@@ -24,10 +26,10 @@ export const uploadVideo = async (req, res) => {
       return res.status(400).json({ message: 'No video file provided' });
     }
 
-    const apiKey = req.headers['apikey'];
+    const {apikey} = req.headers
     
-
-    const apiKeyDocument = await apiKeyModel.findOne({ apiKey });
+    try {
+    const apiKeyDocument = await accountModel.find({ apikey });
 
     const container = apiKeyDocument.container;
 
@@ -38,12 +40,12 @@ export const uploadVideo = async (req, res) => {
 
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-    try {
+   
       const uploadResponse = await blockBlobClient.upload(blobData, blobData.length);
       const videoUrl = `${blockBlobClient.url}`;
       return res.status(200).json({ videoUrl });
     } catch (err) {
-      return res.status(500).json({ message: 'Failed to upload video to Blob Storage' });
+      return res.status(500).json(err.message);
     }
   });
 };

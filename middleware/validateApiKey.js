@@ -1,17 +1,18 @@
 export const validateApiKey = async (req, res, next) => {
-    const clientKey = req.headers['apiKey']
+    const {apikey} = req.headers
+   
     try{
 
    
   
-        if (!clientKey) {
+        if (!apikey) {
           return res.status(400).json({error: 'No API key provided'});
         }
       
         //if (!model.findOne({apiKey: clientKey})) {
         //  return res.status(403).json({error: 'Invalid API key'});
        // }
-      req.apiKey=clientKey;
+      req.apikey=apikey
         next();
     }
     catch(error){

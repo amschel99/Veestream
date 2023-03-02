@@ -1,11 +1,15 @@
 import mongoose from 'mongoose'
-export default mongoose.model("apiKey",{
+const accountSchema=new mongoose.Schema({
 
-apiKey:{
-type:String
-},
-container:{
-type:String
-}
-
+    apikey:{
+        type:String,
+        required:[true,'api key must exist']
+        },
+        container:{
+        type:String,
+        required:[true, 'a container name is required']
+        }
 })
+
+const Account=mongoose.model("Account",accountSchema)
+export default Account
