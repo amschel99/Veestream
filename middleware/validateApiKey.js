@@ -1,5 +1,5 @@
 export const validateApiKey = async (req, res, next) => {
-    const clientKey = req.query.apiKey;
+    const clientKey = req.headers['apiKey']
     try{
 
    
