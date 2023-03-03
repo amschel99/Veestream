@@ -4,11 +4,13 @@ import multer from 'multer';
 import accountModel from '../models/apiKey.js';
 import dotenv from 'dotenv'
 import e from 'express';
+
 dotenv.config()
 const connectionString = process.env.AZURE_CONNECTION_STRING
 
 const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
 
+let loadedBytes = 0;
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -29,10 +31,11 @@ export const uploadVideo = async (req, res) => {
     const {apikey} = req.headers
     
     try {
-    const apiKeyDocument = await accountModel.find({ apikey });
+    const apiKeyDocument = await accountModel.findOne({ apikey });
 
     const container = apiKeyDocument.container;
-
+    console.log(apiKeyDocument)
+console.log(container)
     const containerClient = blobServiceClient.getContainerClient(container);
 
     const blobName = req.file.originalname;
@@ -41,7 +44,10 @@ export const uploadVideo = async (req, res) => {
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
    
-      const uploadResponse = await blockBlobClient.upload(blobData, blobData.length);
+      const uploadResponse = await blockBlobClient.upload(blobData, blobData.length
+        
+        
+        );
       const videoUrl = `${blockBlobClient.url}`;
       return res.status(200).json({ videoUrl });
     } catch (err) {

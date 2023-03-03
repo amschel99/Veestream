@@ -22,7 +22,10 @@ try{
       }
     
       // Create the container
-      await blobServiceClient.createContainer(containerName);
+      await blobServiceClient.createContainer(containerName,{
+        access: 'blob',
+        publicAccess: 'blob'
+      });
  
       return containerName;
 }
