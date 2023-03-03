@@ -6,7 +6,7 @@ import { router } from './routes/video.js'
 import { routerApiKey } from './routes/apiKey.js'
 import { connectDb } from './db/dbConfig.js'
 import swaggerUi from 'swagger-ui-express'
-
+import path from 'path'
 import { errorHandler } from './middleware/errorHandler.js'
 import { validateApiKey } from './middleware/validateApiKey.js'
 import swaggerDocument from './swagger.json' assert { type: "json" };
@@ -14,11 +14,15 @@ dotenv.config()
 
 const app= express()
 app.use(cors({origin:'*'}))
-
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const PORT= process.env.PORT
-app.get("/",(req,res)=>{
-res.send("welcome to veezo, the ultimate video streaming platform!")
-})
+app.use(express.static(path.join(__dirname, "client")));
+
+// Send the index.html file when the root endpoint is requested
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "index.html"));
+});
+
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/generate-api-key",routerApiKey)
