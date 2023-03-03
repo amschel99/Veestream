@@ -1,9 +1,9 @@
-
 import { BlobServiceClient } from '@azure/storage-blob';
 import multer from 'multer';
 import accountModel from '../models/apiKey.js';
 import dotenv from 'dotenv'
 import e from 'express';
+import { PassThrough } from 'stream';
 
 dotenv.config()
 const connectionString = process.env.AZURE_CONNECTION_STRING
@@ -14,7 +14,7 @@ let loadedBytes = 0;
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 1024 * 1024 * 100, // 100MB
+    fileSize: Infinity, // Remove the limit on file size
   },
 }).single('video');
 
@@ -31,23 +31,23 @@ export const uploadVideo = async (req, res) => {
     const {apikey} = req.headers
     
     try {
-    const apiKeyDocument = await accountModel.findOne({ apikey });
+      const apiKeyDocument = await accountModel.findOne({ apikey });
+      const container = apiKeyDocument.container;
+      const containerClient = blobServiceClient.getContainerClient(container);
 
-    const container = apiKeyDocument.container;
-    console.log(apiKeyDocument)
-console.log(container)
-    const containerClient = blobServiceClient.getContainerClient(container);
+      const blobName = req.file.originalname;
+      const blobStream = new PassThrough();
+      blobStream.end(req.file.buffer);
 
-    const blobName = req.file.originalname;
-    const blobData = req.file.buffer;
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-
-   
-      const uploadResponse = await blockBlobClient.upload(blobData, blobData.length
-        
-        
-        );
+      const options = {
+        blockSize: 4 * 1024 * 1024, // 4MB block size
+        concurrency: 20, // 20 concurrent requests
+      
+      };
+      
+      const uploadResponse = await blockBlobClient.uploadStream(blobStream, undefined, undefined, options);
       const videoUrl = `${blockBlobClient.url}`;
       return res.status(200).json({ videoUrl });
     } catch (err) {
