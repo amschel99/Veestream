@@ -42,8 +42,8 @@ export const uploadVideo = async (req, res) => {
       const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
       const options = {
-        blockSize: 4 * 1024 * 1024, // 4MB block size
-        concurrency: 20, // 20 concurrent requests
+        blockSize: 10 * 1024 * 1024, // 4MB block size
+        concurrency: 15, // 20 concurrent requests
       
       };
       
