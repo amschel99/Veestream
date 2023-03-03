@@ -3,6 +3,7 @@ import multer from 'multer';
 import accountModel from '../models/apiKey.js';
 import dotenv from 'dotenv'
 import e from 'express';
+import fs from 'fs';
 import { PassThrough } from 'stream';
 
 dotenv.config()
@@ -11,8 +12,18 @@ const connectionString = process.env.AZURE_CONNECTION_STRING
 const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
 
 let loadedBytes = 0;
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './videos')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+});
+
 const upload = multer({
-  storage: multer.memoryStorage(),
+  storage: storage,
   limits: {
     fileSize: Infinity, // Remove the limit on file size
   },
@@ -28,7 +39,7 @@ export const uploadVideo = async (req, res) => {
       return res.status(400).json({ message: 'No video file provided' });
     }
 
-    const {apikey} = req.headers
+    const { apikey } = req.headers
     
     try {
       const apiKeyDocument = await accountModel.findOne({ apikey });
@@ -37,17 +48,33 @@ export const uploadVideo = async (req, res) => {
 
       const blobName = req.file.originalname;
       const blobStream = new PassThrough();
-      blobStream.end(req.file.buffer);
 
-      const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+const localFilePath = `./videos/${blobName}`;
+
+// Open a read stream from the uploaded file on the local file system
+const readStream = fs.createReadStream(localFilePath);
+
+// Pipe the read stream to the blob stream
+readStream.pipe(blobStream);
+
+const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+
 
       const options = {
-        blockSize: 10 * 1024 * 1024, // 4MB block size
-        concurrency: 15, // 20 concurrent requests
-      
+        blockSize: 10 * 1024 * 1024, // 10MB block size
+        concurrency: 15, // 15 concurrent requests
       };
       
       const uploadResponse = await blockBlobClient.uploadStream(blobStream, undefined, undefined, options);
+      
+      // Delete the uploaded video file from the server's file system
+      fs.unlink(localFilePath, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      });
+
       const videoUrl = `${blockBlobClient.url}`;
       return res.status(200).json({ videoUrl });
     } catch (err) {
