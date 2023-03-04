@@ -29,8 +29,9 @@
     <div class="success">
       <a href="index.html" class="logo"><img src="images/logo.svg" alt="logo"/></a>
       <h2 class="modal-title first-name" id="title-name"></h2>
-      <p>Your API key is <span  id='api' class='api-credential'></span><br></br>
-     <P>Keep it safe</P>
+      <p id="api-key-title">Your API key is <span  id='api' class='api-credential'></span><br></br>
+     <P id="keep-it-safe">Keep it safe</P>
+     <p id="err"></p>
       </p>
       <a href="index.html" class="button">Back home</a>
     </div>
@@ -223,15 +224,31 @@
 
   });
   const getApiKeyButton= document.getElementById("api-key-button")
+
   getApiKeyButton.addEventListener('click',async (e)=>{
+    const emailInput = document.querySelector('input[name="email"]');
+const email = emailInput.value;
     e.preventDefault()
- const res= await  fetch(`http://localhost:8000/generate-api-key`,{
-     method:'POST'
-    })
+
+const res = await fetch('http://localhost:8000/generate-api-key', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ email })
+});
+
     const {apikey}=await res.json()
    
     document.getElementsByClassName('form-content')[0].classList.add('form-content-hide');
     document.getElementsByClassName('success')[0].classList.add('success-show');
+    if(res.status==409){
+    document.getElementById('api').remove()
+    document.getElementById('api-key-title').remove()
+    document.getElementById('keep-it-safe').remove()
+   return  document.getElementById('err').textContent=`email already registered or you provided an empty email`
+}
+document.getElementById('err').remove()
     document.getElementById('api').textContent=apikey
   })
   const apiSpan = document.getElementById('api');

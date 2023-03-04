@@ -1956,3 +1956,12 @@ a:hover {
   white-space: pre-wrap;
   line-height: 1;
 }
+#err {
+    background-color: black;
+    color: red;
+    font-family: monospace;
+    padding: 10px;
+    white-space: pre;
+    font-size: 10px;
+  }
+  

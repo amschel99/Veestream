@@ -8,7 +8,12 @@ const accountSchema=new mongoose.Schema({
         container:{
         type:String,
         required:[true, 'a container name is required']
-        }
+        },
+        email: {
+            type: String,
+            required: [true, 'email is required'],
+            match: [/\S+@\S+\.\S+/, 'invalid email address'],
+          },
 })
 
 const Account=mongoose.model("Account",accountSchema)
