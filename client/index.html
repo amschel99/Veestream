@@ -29,25 +29,28 @@
     <div class="success">
       <a href="index.html" class="logo"><img src="images/logo.svg" alt="logo"/></a>
       <h2 class="modal-title first-name" id="title-name"></h2>
-      <p>You're on the list! We'll be in touch.</p>
+      <p>Your API key is <span  id='api' class='api-credential'></span><br></br>
+     <P>Keep it safe</P>
+      </p>
       <a href="index.html" class="button">Back home</a>
     </div>
     <div class="form-content">
       <a href="index.html" class="logo"><img src="images/logodo.svg" alt="logo"/></a>
-      <h2 class="modal-title">Join the Doomout Waitlist</h2>
-      <p class="modal-subtitle">We're still in early stages, and we'll let you know once we're ready for more beta testers.</p>
-      <form class='form' name='doomoutForm' method='POST'><input type='hidden' name='form-name' value='doomoutForm' />
-        <div class="group">
-          <input type="text" id="firstName" name="first-name" placeholder="&nbsp;" autocomplete="off" required>
-          <label for="first-name">First name</label>
-          <span class="border"></span>
-        </div>
+      <h2 class="modal-title">Get an API key to use veestream REST API</h2>
+      <p class="modal-subtitle">With the API key, you will have full acess to veestream API!</p>
+      <form class='form' name='doomoutForm' method='POST' action="http://localhost:8000/generate-api-key"><input type='hidden' name='form-name' value='doomoutForm' />
+       
         <div class="group">
           <input type="email" name="email" placeholder="&nbsp;" autocomplete="off" required>
           <label for="email">Email</label>
           <span class="border"></span>
         </div>
-        <button type="submit" class="button">GET STARTED</button>
+        <div class="group">
+          <input type="password" name="password" placeholder="&nbsp;" autocomplete="off" required>
+          <label for="email">Password</label>
+          <span class="border"></span>
+        </div>
+        <button  id="api-key-button" class="button">GET STARTED</button>
       </form>
     </div>
   </div>
@@ -68,7 +71,7 @@
         </span>
       </h1>
       <button style="position: relative; bottom: 150px;" class="button modal-toggle">Get started</button>
-      <p class="subtitle">Available soon for Mac <img src="images/logo-apple.svg" alt="apple"/></p>
+      <p class="subtitle">Integrate with web and mobile platforms </p>
     </div>
     <div class="screen-wrapper">
       <img src="images/screen.png" class="screen" alt="screen"/>
@@ -81,42 +84,33 @@
         <img src="images/overlay-top.svg" class="overlay-top show-mobile" alt="overlay"/>
         <img src="images/overlay-bottom.svg" class="overlay-bottom show-mobile" alt="overlay"/>
         <div class="row donts">
-          <div class="feature"><i class="icon" data-feather="x"></i> No integrations</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No templates</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No autoresponders</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No reminders</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No rules</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No filters</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No A.I.</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No snoozing</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Flexible</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Easy to use</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Integrate anywhere</div>
+          <div class="feature"><i class="icon" data-feather="x"></i>High quality videos</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Secure storage</div>
+
           <!-- Repeat-->
-          <div class="feature"><i class="icon" data-feather="x"></i> No integrations</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No templates</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No autoresponders</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No reminders</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No rules</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No filters</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No A.I.</div>
-          <div class="feature"><i class="icon" data-feather="x"></i> No snoozing</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Flexible</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Easy to use</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Integrate anywhere</div>
+          <div class="feature"><i class="icon" data-feather="x"></i>High quality videos</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Secure storage</div>
+
         </div>
         <div class="row dos">
-          <div class="feature"><i class="icon" data-feather="check"></i>Shortcuts</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Unified inbox</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Dark mode</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Lightning fast</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Beautiful imagery</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Simple UI</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Interactive</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Themes</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Monetize videos</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Convert to different formats</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Thumbnail genearation</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> faster uploads</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> low latency</div>
+
           <!-- Repeat-->
-          <div class="feature"><i class="icon" data-feather="check"></i>Shortcuts</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Unified inbox</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Dark mode</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Lightning fast</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Beautiful imagery</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Simple UI</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Interactive</div>
-          <div class="feature"><i class="icon" data-feather="check"></i>Themes</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Monetize videos</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Convert to different formats</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> Thumbnail generation</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> faster uploads</div>
+          <div class="feature"><i class="icon" data-feather="x"></i> low latency</div>
         </div>
       </div>
       <!-- <p>If you’re looking for an email client with more features, try <a href="">these</a>.</p> -->
@@ -213,21 +207,7 @@
     });
 
     // Reserve username form
-    $(".form").submit(function(e) {
-      e.preventDefault();
-      var $form = $(this);
-      $.post($form.attr("action"), $form.serialize()).then(function() {
-        $('.form-content').addClass('form-content-hide');
-        $('.success').addClass('success-show');
-      });
-    });
-
-    // Save user's first name
-    $(".form").submit(function(e) {
-      e.preventDefault();
-      var value = $("#firstName").val();
-      $('.first-name').text("Thank you," + " " + value + "!");
-    });
+   
 
     // Feather icons
     feather.replace()
@@ -242,6 +222,30 @@
     });
 
   });
+  const getApiKeyButton= document.getElementById("api-key-button")
+  getApiKeyButton.addEventListener('click',async (e)=>{
+    e.preventDefault()
+ const res= await  fetch(`http://localhost:8000/generate-api-key`,{
+     method:'POST'
+    })
+    const {apikey}=await res.json()
+   
+    document.getElementsByClassName('form-content')[0].classList.add('form-content-hide');
+    document.getElementsByClassName('success')[0].classList.add('success-show');
+    document.getElementById('api').textContent=apikey
+  })
+  const apiSpan = document.getElementById('api');
+
+// Add click event listener to the API span
+apiSpan.addEventListener('click', () => {
+  const range = document.createRange();
+  range.selectNodeContents(apiSpan);
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+  document.execCommand('copy');
+  alert('API key copied to clipboard!');
+});
 </script>
 
 </body>
