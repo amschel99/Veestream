@@ -14,6 +14,11 @@ const accountSchema=new mongoose.Schema({
             required: [true, 'email is required'],
             match: [/\S+@\S+\.\S+/, 'invalid email address'],
           },
+          password: {
+            type: String,
+            required: [true, 'password is required'],
+            minlength: [6, 'password must be at least 6 characters long']
+          }
 })
 
 const Account=mongoose.model("Account",accountSchema)

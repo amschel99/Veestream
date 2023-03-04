@@ -14,7 +14,7 @@ export const signUp= async (req,res)=>{
         console.log(req.body)
         const{email}=req.body
         const container= await createNewUniqueContainer()
-        const account={apikey,container,email}
+        const account={apikey,container,email,password:req.body.password}
         if(container instanceof Error){
             
            return res.json(container.message)
@@ -25,6 +25,10 @@ export const signUp= async (req,res)=>{
         //save the API key in the database 
      const registeredUser=   await accountModel.findOne({email})
       if(registeredUser ){
+        const{password}=registeredUser
+        if(req.body.password!==password){
+         return   res.status(403).json(`wrong password ${req.body.password},should be ${password}`)
+        }
         console.log(registeredUser)
         return res.json(registeredUser)
       }

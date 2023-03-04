@@ -29,7 +29,7 @@
     <div class="success">
       <a href="index.html" class="logo"><img src="images/logo.svg" alt="logo"/></a>
       <h2 class="modal-title first-name" id="title-name"></h2>
-      <p id="api-key-title">Your API key is <span  id='api' class='api-credential'></span><br></br>
+      <p id="api-key-title">Click on your api key to copy <span  id='api' class='api-credential'></span><br></br>
      <P id="keep-it-safe">Keep it safe</P>
      <p id="err"></p>
       </p>
@@ -72,7 +72,7 @@
         </span>
       </h1>
       <button style="position: relative; bottom: 150px;" class="button modal-toggle">Get started</button>
-     <a href="http://localhost:8000/api-docs"><button style="position: relative; bottom: 150px;" class="button ">Go to API docs</div>/button></a> 
+     <a href="http://localhost:8000/api-docs"><button style="position: relative; bottom: 150px;" class="button ">Go to API docs</button></a> 
       <p class="subtitle">Integrate with web and mobile platforms </p>
     </div>
     <div class="screen-wrapper">
@@ -164,7 +164,7 @@
   <script src="./js/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/scripts.min.js"></script>
 <script>
-
+const baseUrl = window.location.protocol + "//" + window.location.host;
   // Close modal on escape key
   $(document).keyup(function(e) {
     if (e.key === "Escape") {
@@ -229,14 +229,16 @@
   getApiKeyButton.addEventListener('click',async (e)=>{
     const emailInput = document.querySelector('input[name="email"]');
 const email = emailInput.value;
+const passwordInput = document.querySelector('input[name="password"]');
+const password = passwordInput.value;
     e.preventDefault()
 
-const res = await fetch('http://localhost:8000/generate-api-key', {
+const res = await fetch(`${baseUrl}/generate-api-key`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify({ email })
+  body: JSON.stringify({ email,password })
 });
 
     const {apikey}=await res.json()
@@ -248,6 +250,12 @@ const res = await fetch('http://localhost:8000/generate-api-key', {
     document.getElementById('api-key-title').remove()
     document.getElementById('keep-it-safe').remove()
    return  document.getElementById('err').textContent=`email field cannot be empty`
+}
+if(res.status==403){
+    document.getElementById('api').remove()
+    document.getElementById('api-key-title').remove()
+    document.getElementById('keep-it-safe').remove()
+   return  document.getElementById('err').textContent=`wrong password!`
 }
 document.getElementById('err').remove()
     document.getElementById('api').textContent=apikey
