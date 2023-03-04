@@ -78,7 +78,8 @@ const blockBlobClient = containerClient.getBlockBlobClient(blobName);
       });
 
       const url = `${blockBlobClient.url}`;
-      const videoData={name,url}
+  
+      const videoData={name,url,apikey:req.headers.apikey}
     const videoMetadata= await VideoModel.create(videoData)
     const extraData={poster:`/video/${videoMetadata._id}/poster`,gif:`/video/${videoMetadata._id}/gif`,name,url}
    const response= await VideoModel.findOneAndUpdate({url},extraData)
