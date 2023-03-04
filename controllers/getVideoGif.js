@@ -1,18 +1,19 @@
 
 import ffmpeg from 'fluent-ffmpeg'
 import fs from 'fs'
-
+import Video from '../models/video.js'
 export const getVideoGif= async (req,res)=>{
 
 
- const videoPath = `assets/${req.params.id}.mp4`;
+ 
   const gifDirectory = 'assets/gifs';
   const gifPath = `${gifDirectory}/${req.params.id}.gif`;
     try{
+      const {url}= await Video.findOne({_id:req.params.id})
         if (!fs.existsSync(gifDirectory)) {
             fs.mkdirSync(gifDirectory);
           }
-        ffmpeg(videoPath)
+        ffmpeg(url)
         .setDuration(10)
         .output(gifPath)
         .on('end', () => {

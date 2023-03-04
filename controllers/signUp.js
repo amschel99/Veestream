@@ -27,14 +27,15 @@ export const signUp= async (req,res)=>{
       if(registeredUser ){
         const{password}=registeredUser
         if(req.body.password!==password){
-         return   res.status(403).json(`wrong password ${req.body.password},should be ${password}`)
+         return   res.status(403).json(`wrong password `)
         }
-        console.log(registeredUser)
-        return res.json(registeredUser)
+        const responseData={apikey:registeredUser.apikey}
+       
+        return res.json(responseData)
       }
     const response=    await accountModel.create(account)
-
-res.json(response)
+const responseData={apikey:response.apikey}
+res.json(responseData)
 
 
     }

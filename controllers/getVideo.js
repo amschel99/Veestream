@@ -1,15 +1,15 @@
 import path from 'path'
 import fs from 'fs'
-
+import Video from '../models/video.js'
  export const getVideo= async (req,res)=>{
     try{
 
+        const {url}= await Video.findOne({_id:req.params.id})
 
 
 
-
-        //check if API key isvalid 
-        const video= path.resolve(`./assets/${req.params.id}.mp4`)
+        
+        const video= path.resolve(`${url}`)
         fs.stat(video,(err,stats)=>{
             if(err){
                 console.log(err)

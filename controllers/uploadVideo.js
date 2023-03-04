@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import e from 'express';
 import fs from 'fs';
 import { PassThrough } from 'stream';
+import VideoModel from '../models/video.js';
 
 dotenv.config()
 const connectionString = process.env.AZURE_CONNECTION_STRING
@@ -31,6 +32,7 @@ const upload = multer({
 
 export const uploadVideo = async (req, res) => {
   upload(req, res, async (err) => {
+    const{name}= req.body
     if (err) {
       return res.status(400).json({ message: err.message });
     }
@@ -75,8 +77,12 @@ const blockBlobClient = containerClient.getBlockBlobClient(blobName);
         }
       });
 
-      const videoUrl = `${blockBlobClient.url}`;
-      return res.status(200).json({ videoUrl });
+      const url = `${blockBlobClient.url}`;
+      const videoData={name,url}
+    const videoMetadata= await VideoModel.create(videoData)
+    const extraData={poster:`/video/${videoMetadata._id}/poster`,gif:`/video/${videoMetadata._id}/gif`,name,url}
+   const response= await VideoModel.findOneAndUpdate({url},extraData)
+      return res.status(200).json(response);
     } catch (err) {
       return res.status(500).json(err.message);
     }
