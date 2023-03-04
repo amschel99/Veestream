@@ -51,7 +51,7 @@
           <label for="email">Password</label>
           <span class="border"></span>
         </div>
-        <button  id="api-key-button" class="button">GET STARTED</button>
+        <button  id="api-key-button" class="button">GET API KEY</button>
       </form>
     </div>
   </div>
@@ -72,6 +72,7 @@
         </span>
       </h1>
       <button style="position: relative; bottom: 150px;" class="button modal-toggle">Get started</button>
+     <a href="http://localhost:8000/api-docs"><button style="position: relative; bottom: 150px;" class="button ">Go to API docs</div>/button></a> 
       <p class="subtitle">Integrate with web and mobile platforms </p>
     </div>
     <div class="screen-wrapper">
@@ -246,7 +247,7 @@ const res = await fetch('http://localhost:8000/generate-api-key', {
     document.getElementById('api').remove()
     document.getElementById('api-key-title').remove()
     document.getElementById('keep-it-safe').remove()
-   return  document.getElementById('err').textContent=`email already registered or you provided an empty email`
+   return  document.getElementById('err').textContent=`email field cannot be empty`
 }
 document.getElementById('err').remove()
     document.getElementById('api').textContent=apikey
