@@ -1,57 +1,52 @@
+import { BlobServiceClient } from '@azure/storage-blob';
+import Video from '../models/video.js';
+import dotenv from 'dotenv'
+import Account from '../models/apiKey.js';
 import path from 'path'
-import fs from 'fs'
-import Video from '../models/video.js'
- export const getVideo= async (req,res)=>{
-    try{
-
-        const {url}= await Video.findOne({_id:req.params.id})
+import mime from 'mime';
+dotenv.config()
+const blobServiceClient = BlobServiceClient.fromConnectionString( process.env.AZURE_CONNECTION_STRING);
 
 
-
-        
-        const video= path.resolve(`${url}`)
-        fs.stat(video,(err,stats)=>{
-            if(err){
-                console.log(err)
-            }
-            else{
-                //here we have succesfully read our file
-
-                console.log(stats)
-                const range = req.headers.range;
-if (!range) {
-    console.log("no range")
-return res.sendStatus(416);
-}
-console.log(range)
-//chunk logic
-const positions = range.replace(/bytes=/, "").split("-");
-const start = parseInt(positions[0], 10);
-const total = stats.size;
-const end = positions[1] ? parseInt(positions[1], 10) : total - 1;
-const chunksize = (end - start) + 1;
-
-res.writeHead(206, {
-    'Transfer-Encoding': 'chunked',
-    "Content-Range": "bytes " + start + "-" + end + "/" + total,
-    "Accept-Ranges": "bytes",
-    "Content-Length": chunksize,
-    "Content-Type": 'video/mp4'
-    });
-    const stream = fs.createReadStream(video, { start: start, end: end, autoClose: true
-    }).on('end', function () {
-        console.log('Stream Done');
-        })
-        .on("error", function (err) {
-        res.end(err);}).pipe(res, { end: true });
+export const getVideo = async (req, res) => {
+  try {
     
+    const {container}= await Account.findOne({apikey:req.headers.apikey})
+    console.log(container)
+    const containerClient = blobServiceClient.getContainerClient(container);
+    const { url } = await Video.findOne({ _id: req.params.id });
+    const blobName = path.basename(url)
+    const contentType = mime.getType(blobName); 
+console.log(url)
+    const blobClient = containerClient.getBlobClient(blobName);
+    const downloadResponse = await blobClient.download();
 
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Content-Length', downloadResponse.contentLength);
 
-            }
-        })
+    const range = req.headers.range;
+    if (!range) {
+      console.log('no range');
+      res.status(200);
+      downloadResponse.readableStreamBody.pipe(res);
+    } else {
+      console.log(range);
+
+      const positions = range.replace(/bytes=/, '').split('-');
+      const start = parseInt(positions[0], 10);
+      const end = positions[1] ? parseInt(positions[1], 10) : downloadResponse.contentLength - 1;
+      const chunksize = (end - start) + 1;
+
+      res.writeHead(206, {
+        'Content-Range': `bytes ${start}-${end}/${downloadResponse.contentLength}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunksize,
+        'Content-Type': downloadResponse.contentType,
+      });
+      downloadResponse.readableStreamBody.pipe(res, { end: true, start, end });
     }
-    catch(e){
-console.log(`an error occured`)
-    }
-}
-
+  } catch (e) {
+    console.log(`an error occured`);
+    res.status(500).send(e.message);
+  }
+};
