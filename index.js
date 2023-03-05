@@ -32,8 +32,8 @@ app.use('/video',router)
 app.use("/videos",routerVideos)
 
 app.use(errorHandler)
-
-connectDb("mongodb://amschel:iamLehcsma9@mongo:27017/?authSource=admin").
+const mongoUrl=`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_IP}:${process.env.MONGO_PORT}/?authSource=admin`
+connectDb(mongoUrl).
 then(()=>{
     console.log('db connected successfully')
     app.listen(PORT, ()=>{
