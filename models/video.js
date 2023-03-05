@@ -11,6 +11,7 @@ const  videoSchema=new mongoose.Schema({
         type: String,
      
       },
+    
       gif: {
         type: String,
        

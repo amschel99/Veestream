@@ -1,1 +1,1 @@
-declare module 'console-progress'
+declare module 'video-thumbnail'
