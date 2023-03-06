@@ -13,6 +13,6 @@ RUN if [ $NODE_ENV = "development" ]; \
           fi
 COPY . .
 ENV PORT 4000
-EXPOSE $PORT    # this is where our app will be listening in docker. so we tell docker to expose that port
+EXPOSE $PORT   
 CMD ["npm", "run", "dev"]
 
