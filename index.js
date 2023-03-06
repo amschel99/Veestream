@@ -7,11 +7,12 @@ import { routerApiKey } from './routes/apiKey.js'
 import { connectDb } from './db/dbConfig.js'
 import swaggerUi from 'swagger-ui-express'
 import path from 'path'
+import { config } from './config/config.js'
 import { errorHandler } from './middleware/errorHandler.js'
 import { validateApiKey } from './middleware/validateApiKey.js'
 import swaggerDocument from './swagger.json' assert { type: "json" };
 dotenv.config()
-
+const{MONGO_USERNAME,MONGO_DATABASE,MONGO_IP,MONGO_PORT,MONGO_PASSWORD}=config
 const app= express()
 app.use(cors({origin:'*'}))
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
@@ -32,7 +33,7 @@ app.use('/video',router)
 app.use("/videos",routerVideos)
 
 app.use(errorHandler)
-const mongoUrl=`mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_IP}:${process.env.MONGO_PORT}/?authSource=admin`
+const mongoUrl=`mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin`
 connectDb(mongoUrl).
 then(()=>{
     console.log('db connected successfully')

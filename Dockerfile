@@ -12,7 +12,7 @@ RUN if [ $NODE_ENV = "development" ]; \
           else npm install --only=production; \
           fi
 COPY . .
-ENV PORT=5000
-EXPOSE $PORT
+ENV PORT 4000
+EXPOSE $PORT    # this is where our app will be listening in docker. so we tell docker to expose that port
 CMD ["npm", "run", "dev"]
 

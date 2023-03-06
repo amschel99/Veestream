@@ -4,8 +4,10 @@ import dotenv from 'dotenv'
 import Account from '../models/apiKey.js';
 import path from 'path'
 import mime from 'mime';
+import { config } from '../config/config.js';
 dotenv.config()
-const blobServiceClient = BlobServiceClient.fromConnectionString( process.env.AZURE_CONNECTION_STRING);
+const {AZURE_CONNECTION_STRING}=config
+const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_CONNECTION_STRING);
 
 
 export const getVideo = async (req, res) => {

@@ -6,14 +6,14 @@ import Account from '../models/apiKey.js';
 import dotenv from 'dotenv';
 import path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
-
+import { config } from '../config/config.js';
 dotenv.config();
-
+const {AZURE_CONNECTION_STRING}=config
 export const getVideoGif = async (req, res) => {
   try {
     const { url, apikey } = await Video.findOne({ _id: req.params.id });
     const { container } = await Account.findOne({ apikey });
-    const blobService = azure.createBlobService(process.env.AZURE_CONNECTION_STRING);
+    const blobService = azure.createBlobService(AZURE_CONNECTION_STRING);
     const blobName = path.basename(url);
 
     // create a temporary file path to save the video clip

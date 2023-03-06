@@ -6,9 +6,10 @@ import e from 'express';
 import fs from 'fs';
 import { PassThrough } from 'stream';
 import VideoModel from '../models/video.js';
-
+import { config } from '../config/config.js';
 dotenv.config()
-const connectionString = process.env.AZURE_CONNECTION_STRING
+const{AZURE_CONNECTION_STRING}=config
+const connectionString =AZURE_CONNECTION_STRING
 
 const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
 
