@@ -1,0 +1,11 @@
+
+
+export const config={
+MONGO_USERNAME:process.env.MONGO_USERNAME,
+MONGO_PASSWORD:process.env.MONGO_PASSWORD,
+MONGO_IP:process.env.MONGO_IP || 'mongo',
+MONGO_PORT:process.env.MONGO_PORT || 27017,
+MONGO_DATABASE:process.env.MONGO_DATABASE,
+AZURE_CONNECTION_STRING:process.env.AZURE_CONNECTION_STRING,
+PORT:process.env.PORT || 4000
+}

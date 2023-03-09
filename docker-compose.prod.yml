@@ -1,5 +1,9 @@
 version: "3"
 services:
+  nginx:
+   
+    ports:
+      - "80:80"
   veezo:
     build:
       context: .
@@ -7,4 +11,15 @@ services:
         NODE_ENV: production
     environment:
       - NODE_ENV=production
+      
+      - AZURE_CONNECTION_STRING=${AZURE_CONNECTION_STRING}
+      - MONGO_USERNAME=${MONGO_USERNAME}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_IP=${MONGO_IP}
+      - MONGO_PORT=${MONGO_PORT}
+      - MONGO_DATABASE=${MONGO_DATABASE}
     command: node index.js
+  mongo:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
