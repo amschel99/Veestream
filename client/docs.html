@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Veestream API Documentation</title>
+	<style>
+		pre {
+			background-color: #f8f8f8;
+			border: 1px solid #ccc;
+			padding: 10px;
+			overflow-x: auto;
+		}
+	</style>
+</head>
+<body>
+	<h1>Veestream API Documentation</h1>
+	<p>Welcome to the Veestream API documentation. Veestream is a video API that allows you to upload, stream, and manage your video content. This API is intended for developers who want to integrate video functionality into their applications.</p>
+
+	<h2>Base URL</h2>
+	<p>The base URL for the Veestream API is <code>https://veestream.tech</code>.</p>
+
+	<h2>Authentication</h2>
+	<p>Authentication is required to use the Veestream API. You can generate an API key by making a POST request to the <code>/generate-api-key</code> endpoint.</p>
+
+	<h3>Generate API Key</h3>
+	<pre><code>POST /generate-api-key</code></pre>
+	<p>To generate an API key, you must pass your name and password in the request body. The response will be a hexadecimal string which serves as your API key.</p>
+	<pre><code>{
+  "name": "your_name",
+  "password": "your_password"
+}</code></pre>
+	<pre><code>{
+  "apiKey": "2a5b3c6d1f8e9a4b7c5e9d8f7a6b5c3d"
+}</code></pre>
+	<p>To make requests to other endpoints, include the <code>apikey</code> header in your request.</p>
+
+	<h2>Endpoints</h2>
+
+	<h3>Upload Video</h3>
+	<pre><code>POST /video/upload</code></pre>
+	<p>This endpoint allows you to upload a video file named <code>video</code> and a name of the video in the request body. You can only upload one video at a time.</p>
+	<pre><code>{
+  "name": "My Video",
+  "video": "&lt;binary_data&gt;"
+}</code></pre>
+	<p>Include the <code>apikey</code> header in your request.</p>
+
+	<h3>Stream Video</h3>
+	<pre><code>GET /video/:id</code></pre>
+	<p>This endpoint allows you to stream a video with the specified <code>id</code> from Azure to the client application. Remember to include the <code>apikey</code> header in your request. The video will be streamed in chunks directly from Azure.</p>
+
+	<h3>Get Video Metadata</h3>
+	<pre><code>GET /video/:id/data</code></pre>
+	<p>This endpoint allows you to get metadata about a video, such as its name, poster, and GIF. Remember to include the <code>apikey</code> header in your request.</p>
+
+	<h3>Generate Video Poster</h3>
+	<pre><code>GET /video/:id/poster</code></pre>
+	<p>This endpoint generates a poster for the specified video. Remember to include the <code>apikey</code> header in your request.</p>
+
+	<h3>Generate Video GIF</h3>
+	<pre><code>GET /video/:id/data/gif</code></pre>
+    <p>This endpoint generates a GIF for the specified video. Remember to include the <code>apikey</code> header in your request.</p>
+
+    <h3>Get All Videos</h3>
+    <pre><code>GET /videos</code></pre>
+    <p>This endpoint allows you to get all the videos for your account. Remember to include the <code>apikey</code> header in your request.</p>
+    
+    <h2>Conclusion</h2>
+    <p>That's it! We hope you find the Veestream API useful for your video needs. If you have any questions or feedback, please contact us at <a href="mailto:support@veestream.tech">support@veestream.tech</a>.</p>
+    
+    </body>
+    </html>
