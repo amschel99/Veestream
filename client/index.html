@@ -23,11 +23,13 @@
   </head>
 
 <body>
+ 
+  <script src="https://www.paypal.com/sdk/js?client-id=AbyiH6RWVmLK3byU5W0DyZ8bRN4iLmqMQ5y28zrpkVpqWi1fif3p-jklMHZecbrm-tJ-CDz_0Wv2RbKQ&currency=USD"></script>
   <div class="modal">
   <button type="button" class="modal-close modal-toggle"><i class="icon" data-feather="x"></i><span class="hide-mobile">ESC</span></button>
   <div class="modal-content">
     <div class="success">
-      <a href="index.html" class="logo"><img src="images/thumbnail.png" alt="logo"/></a>
+
       <h2 class="modal-title first-name" id="title-name"></h2>
       <p id="api-key-title">Click on your api key to copy <span  id='api' class='api-credential'></span><br></br>
      <P id="keep-it-safe">Keep it safe</P>
@@ -36,9 +38,9 @@
       <a href="index.html" class="button">Back home</a>
     </div>
     <div class="form-content">
-      <a href="index.html" class="logo"><img src="images/thumbnail.png" alt="logo"/></a>
+
       <h2 class="modal-title">Get an API key to use veestream REST API</h2>
-      <p class="modal-subtitle">With the API key, you will have full acess to veestream API!</p>
+
       <form class='form' name='doomoutForm' method='POST' action="http://localhost:8000/generate-api-key"><input type='hidden' name='form-name' value='doomoutForm' />
        
         <div class="group">
@@ -51,6 +53,7 @@
           <label for="email">Password</label>
           <span class="border"></span>
         </div>
+         <div id="paypal-button-container"></div>
         <button  id="api-key-button" class="button">GET API KEY</button>
       </form>
     </div>
@@ -237,6 +240,64 @@ apiSpan.addEventListener('click', () => {
   document.execCommand('copy');
   alert('API key copied to clipboard!');
 });
+paypal
+        .Buttons({
+          // Sets up the transaction when a payment button is clicked
+          createOrder: function () {
+            return fetch("/checkout/create-order", {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              // use the "body" param to optionally pass additional order information
+              // like product skus and quantities
+              body: JSON.stringify({
+                cart: [
+                  {
+                    sku: "YOUR_PRODUCT_STOCK_KEEPING_UNIT",
+                    quantity: "YOUR_PRODUCT_QUANTITY",
+                  },
+                ],
+              }),
+            })
+              .then((response) => response.json())
+              .then((order) => order.id);
+          },
+          // Finalize the transaction after payer approval
+          onApprove: function (data) {
+            return fetch("/checkout/capture-order", {
+              method: "post",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                orderID: data.orderID,
+              }),
+            })
+              .then((response) => response.json())
+              .then((orderData) => {
+                // Successful capture! For dev/demo purposes:
+                console.log(
+                  "Capture result",
+                  orderData,
+                  JSON.stringify(orderData, null, 2)
+                );
+                const transaction = orderData.purchase_units[0].payments.captures[0];
+                alert(
+                  "Transaction " +
+                    transaction.status +
+                    ": " +
+                    transaction.id +
+                    "\n\nSee console for all available details"
+                );
+                // When ready to go live, remove the alert and show a success message within this page. For example:
+                // var element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL:  actions.redirect('thank_you.html');
+              });
+          },
+        })
+        .render("#paypal-button-container");
 </script>
 
 </body>

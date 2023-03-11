@@ -44,7 +44,11 @@ export const uploadVideo = async (req, res) => {
 
     const { apikey } = req.headers
     
-    try {
+    try { 
+      const videosQuantity=await VideoModel.find({apikey})
+      if(videosQuantity.length>5){
+        return res.json(`You can only upload 5 files in the test version, the live api will be launched soon`)
+      }
       const apiKeyDocument = await accountModel.findOne({ apikey });
       const container = apiKeyDocument.container;
       const containerClient = blobServiceClient.getContainerClient(container);
