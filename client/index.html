@@ -56,7 +56,7 @@
     </div>
   </div>
 </div>
-  <div class="content">
+  <div style="margin-top: 80px;" class="content">
     <a href="index.html" class="logo"><img src="images/thumbnail.png" alt="logo"/></a>
     <div class="hero">
       <p class="title">VeeStream is a highly versatile video streaming API that enables users to seamlessly upload their video content and obtain API endpoints to stream their videos, access video metadata, and effortlessly integrate their content into any web or mobile platform. It is an invaluable tool for educators who want to share video content online, content creators who wish to incorporate video content into their platform, and businesses that require an in-house video sharing solution. With VeeStream, users can easily manage their video content, improve their user experience, and reach a wider audience across multiple platforms.</p>
@@ -71,8 +71,8 @@
           <b>Marketing and advertising</b>
         </span>
       </h1>
-      <button style="position: relative; bottom: 150px;" class="button modal-toggle">Get started</button>
-     <a href="http://localhost:8000/api-docs"><button style="position: relative; bottom: 150px;" class="button ">Go to API docs</button></a> 
+      <button  class="button modal-toggle">Get started</button>
+     <a id="go-to-docs" ><button  class="button ">Go to API docs</button></a> 
       <p class="subtitle">Integrate with web and mobile platforms </p>
     </div>
     <div class="screen-wrapper">
@@ -130,6 +130,7 @@
 <script>
 const baseUrl = window.location.protocol + "//" + window.location.host;
   // Close modal on escape key
+  document.getElementById('go-to-docs').href=`${baseUrl}/api-docs`
   $(document).keyup(function(e) {
     if (e.key === "Escape") {
       $('.modal').removeClass('modal-show');
