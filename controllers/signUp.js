@@ -5,8 +5,7 @@ import dotenv from 'dotenv'
 import { createNewUniqueContainer } from "./createNewUniqueContainer.js"
 dotenv.config()
 export const signUp= async (req,res)=>{
-const paymentDetails=req.order;
-console.log(paymentDetails)
+
     const apikey=generateApiKey()
  
     
