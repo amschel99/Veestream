@@ -5,68 +5,203 @@
 	<title>Veestream API Documentation</title>
 	<style>
 		pre {
-			background-color: #f8f8f8;
-			border: 1px solid #ccc;
-			padding: 10px;
-			overflow-x: auto;
-		}
+  background-color: #282c34;
+  color: #abb2bf;
+  border: 1px solid #abb2bf;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  border-radius: 5px;
+}
+
+
+
 	</style>
 </head>
 <body>
 	<h1>Veestream API Documentation</h1>
-	<p>Welcome to the Veestream API documentation. Veestream is a video API that allows you to upload, stream, and manage your video content. This API is intended for developers who want to integrate video functionality into their applications.</p>
+	<p>Welcome to the Veestream API documentation. Veestream is a video API that allows you to upload, stream, and manage your video content. This API is intended for anyone who wants to integrate video on demand feature into their web or mobile applications.</p>
 
 	<h2>Base URL</h2>
-	<p>The base URL for the Veestream API is <code>https://veestream.tech</code>.</p>
+	<p>The base URL for the Veestream API is <code>http://veestream.tech</code>.</p>
 
-	<h2>Authentication</h2>
-	<p>Authentication is required to use the Veestream API. You can generate an API key by making a POST request to the <code>/generate-api-key</code> endpoint.</p>
+	<h2>Getting an API key</h2>
+	<p>An API key is required to use the veestream API. To get an API key,register by providing your name, email and paying 1$ via paypal, credit card or debit card. After you signup, you will get an API key. It is recommended that you keep this API key safe and private. This API key must be provided in the request header when making calls to other API endpoints. After the payment, you will get an email from paypal with your transaction receipt. It is recommended that you keep this receipt safe for reference. </p>
 
-	<h3>Generate API Key</h3>
-	<pre><code>POST /generate-api-key</code></pre>
-	<p>To generate an API key, you must pass your name and password in the request body. The response will be a hexadecimal string which serves as your API key.</p>
-	<pre><code>{
-  "name": "your_name",
-  "password": "your_password"
-}</code></pre>
-	<pre><code>{
-  "apiKey": "2a5b3c6d1f8e9a4b7c5e9d8f7a6b5c3d"
-}</code></pre>
-	<p>To make requests to other endpoints, include the <code>apikey</code> header in your request.</p>
-
+	
 	<h2>Endpoints</h2>
 
 	<h3>Upload Video</h3>
+	<p>This endpoint allows a user with an API key to upload one video at a time. When you signed up, an azure blob storage container is created for you. All the video files you upload will be stored on that container.</p>
 	<pre><code>POST /video/upload</code></pre>
-	<p>This endpoint allows you to upload a video file named <code>video</code> and a name of the video in the request body. You can only upload one video at a time.</p>
-	<pre><code>{
-  "name": "My Video",
-  "video": "&lt;binary_data&gt;"
-}</code></pre>
-	<p>Include the <code>apikey</code> header in your request.</p>
+	<h6>Headers</h6>
+<p>Use the following header in your  request for the upload endpoint:</p>
+<pre><code class="language-bash">apikey: yourapikey</code></pre>
+<h6>Body</h6>
+<p>Include name in the request body. This should be a string, the name for your file.</p>
+<pre><code class="language-bash">name:my Video</code></pre>
+<h6>File Upload</h6>
+<p>To upload a file, send a POST request to the API endpoint and include the file as a parameter named "video".</p>
+<p>The following example demonstrates how to upload a file using curl</p>
+<pre><code class="language-javascript">curl -X POST -H "apiKey: b7642f0d6db02f383498e7f7edd353597ad8e5fe" -F "video=@/home/amschel/Downloads/honey.mp4" -F "name=My Video" http://localhost:8000/video/upload
+</code></pre>
+<p>The following example demonstrates how to upload a file using javascript</p>
+<pre><code class="language-javascript">const apiKey = 'b7642f0d6db02f383498e7f7edd353597ad8e5fe';
+	const fileInput = document.querySelector('#file-input');
+	const formData = new FormData();
+	formData.append('video', fileInput.files[0]);
+	formData.append('name', 'My Video');
+	
+	fetch('http://localhost:8000/video/upload', {
+	  method: 'POST',
+	  headers: {
+		'apiKey': apiKey,
+	  },
+	  body: formData
+	})
+	.then(response => response.json())
+	.then(data => console.log(data))
+	.catch(error => console.error(error));
+	
+	</code></pre>
+	<p>The following example demonstrates how to upload a file in flutter</p>
+	<pre>import 'dart:io';
+		import 'package:http/http.dart' as http;
+		
+		final String apiKey = 'b7642f0d6db02f383498e7f7edd353597ad8e5fe';
+		final String url = 'http://localhost:8000/video/upload';
+		final String filePath = '/home/amschel/Downloads/honey.mp4';
+		
+		Future<void> uploadFile() async {
+		  final file = File(filePath);
+		
+		  final request = http.MultipartRequest('POST', Uri.parse(url));
+		  request.headers.addAll({'apiKey': apiKey});
+		  request.files.add(http.MultipartFile.fromBytes('video', await file.readAsBytes()));
+		  request.fields['name'] = 'My Video'; // add a field to the request
+		
+		  final response = await request.send();
+		  final responseJson = await http.Response.fromStream(response).then((res) => res.body);
+		
+		  print(responseJson);
+		}
+		
+		</code></pre>
 
+		<p>Example response</p>
+		<pre><code class="language-javascript">
+			
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "_id": "61f19d85d28a103995b1816c",
+  "name": "honey.mp4",
+  "poster": "/video/61f19d85d28a103995b1816c/poster",
+  "gif": "/video/61f19d85d28a103995b1816c/gif",
+  "url": "https://mystorageaccount.blob.core.windows.net/mycontainer/honey.mp4",
+  "apikey": "b7642f0d6db02f383498e7f7edd353597ad8e5fe"
+ 
+}
+
+		</code></pre>
 	<h3>Stream Video</h3>
 	<pre><code>GET /video/:id</code></pre>
-	<p>This endpoint allows you to stream a video with the specified <code>id</code> from Azure to the client application. Remember to include the <code>apikey</code> header in your request. The video will be streamed in chunks directly from Azure.</p>
-
+	<p>This endpoint creats a readable stream from your video file in azure to the client and the video is streamed in chunks.When you upload a video, you will get a response with an _id property. use this _id as the request parameter. e.g	<pre><code>GET /video/61f19d85d28a103995b1816c</code></pre> </p>
+	<p>Below is javascript code that can be used to make the rquest to te endpoint</p>
+	<pre><code>const videoUrl = "http://veestream.tech/video/61f19d85d28a103995b1816c";
+		const apiKey = "b7642f0d6db02f383498e7f7edd353597ad8e5fe";
+		const videoTag = document.getElementById("my-video");
+		
+		const headers = {
+		  "apiKey": apiKey
+		};
+		
+		fetch(videoUrl, {
+		  method: "GET",
+		  headers: headers
+		})
+		.then(response => response.blob())
+		.then(blob => {
+		  const videoBlobUrl = URL.createObjectURL(blob);
+		  videoTag.src = videoBlobUrl;
+		})
+		.catch(error => console.error(error));
+		
+	</code></pre>
 	<h3>Get Video Metadata</h3>
 	<pre><code>GET /video/:id/data</code></pre>
-	<p>This endpoint allows you to get metadata about a video, such as its name, poster, and GIF. Remember to include the <code>apikey</code> header in your request.</p>
+	<p>This allows you to get metadata about a particular video. We pass the id parameter to specify the video we are requesting data for. id is from _id field that each video has.</p>
+	<p>Below is an example curl command</p>
+	<pre><code>curl -X GET -H "apikey: b7642f0d6db02f383498e7f7edd353597ad8e5fe" http://veestram.tech/video/61f19d85d28a103995b1816c/data
+	</code></pre>
+	<p>Below is the example code in javascript for this endpoint</p>
+	<pre>
+		const axios = require('axios');
 
+const url = 'http://veestram.tech/video/61f19d85d28a103995b1816c/data';
+
+const headers = {
+  apiKey: 'b7642f0d6db02f383498e7f7edd353597ad8e5fe',
+};
+
+axios.get(url, { headers })
+  .then((response) => {
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.log(error.response.data);
+  });
+
+	</code></pre>
 	<h3>Generate Video Poster</h3>
-	<pre><code>GET /video/:id/poster</code></pre>
-	<p>This endpoint generates a poster for the specified video. Remember to include the <code>apikey</code> header in your request.</p>
+	<p>A video poster is generated by taking a screenshot of the video from 10-12secs. It is of type image/png. Below is the example curl command for this. </p>
+	<pre><code>curl -X GET \
+		http://veestream.tech/video/61f19d85d28a103995b1816c/poster \
+		-H 'apikey: b7642f0d6db02f383498e7f7edd353597ad8e5fe'
+	  </code></pre>
+	  <p>When you make a request to /video/:id/data, you get a poster as part of the response. This poster in the response is basically a url to this endpoint. When you add the poster as the src attribute of an image, what happens is that the poster endpoint is called to generate a poster. </p>
+
 
 	<h3>Generate Video GIF</h3>
-	<pre><code>GET /video/:id/data/gif</code></pre>
+	<p>A video gif is generated using ffmpeg which takes a video and generates a 5 second gif. </p>
+	<pre><code>
+		curl -X GET \
+		http://veestream.tech/video/61f19d85d28a103995b1816c/gif \
+		-H 'apikey: b7642f0d6db02f383498e7f7edd353597ad8e5fe'
+	</code></pre>
+	<p>When you make a request to /video/:id/data, you get a gif too as part of the response. This gif in the response is basically a url to this endpoint. When you add the gif as the src attribute of an image, what happens is that the gif endpoint is called to generate a gif. </p>
+
     <p>This endpoint generates a GIF for the specified video. Remember to include the <code>apikey</code> header in your request.</p>
 
     <h3>Get All Videos</h3>
     <pre><code>GET /videos</code></pre>
-    <p>This endpoint allows you to get all the videos for your account. Remember to include the <code>apikey</code> header in your request.</p>
-    
+    <p>This endpoint allows you to get all the videos related to your account.Below are examples of how to utilize this endpoints using curl and javascript</p>
+	<p>curl:</p>
+	<pre><code>curl -H "apikey: b7642f0d6db02f383498e7f7edd353597ad8e5fe" http://veestream.tech/videos
+	</code></pre>
+	<p>Javascript</p>
+
+		<pre><code>fetch('http://veestream.tech/videos', {
+			headers: {
+			  'apikey': 'b7642f0d6db02f383498e7f7edd353597ad8e5fe'
+			}
+		  })
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error(error));
+		  
+		
+	</code></pre>
+	<p>Example response</p>
+	<pre><code>[  {    "_id": "60e93a62a09de04c753f53d7",    "name": "Sample Video",    "poster": "http://veestream.tech/video/61f19d85d28a103995b1816c/poster",    "gif": "http://veestream.tech/video/61f19d85d28a103995b1816c/gif",    "url": "http://veestream.tech/video/61f19d85d28a103995b1816c.mp4",    "apikey": "b7642f0d6db02f383498e7f7edd353597ad8e5fe"}]
+	</code></pre>
     <h2>Conclusion</h2>
-    <p>That's it! We hope you find the Veestream API useful for your video needs. If you have any questions or feedback, please contact us at <a href="mailto:support@veestream.tech">support@veestream.tech</a>.</p>
+    <p>That's it! We hope you find the Veestream API useful for your video needs. If you have any questions, feedback or need help with integration, please contact us at <a href="mailto:support@veestream.tech">support@veestream.tech</a>.</p>
     
     </body>
     </html>
