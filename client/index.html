@@ -252,7 +252,7 @@ paypal
     .Buttons({
       // Sets up the transaction when a payment button is clicked
       createOrder: function (data, actions) {
-        alert(`creating order`)
+       
         return actions.order.create({
           purchase_units: [
             {
