@@ -54,7 +54,9 @@
           <span class="border"></span>
         </div>
        <div id="paypal-button-container"></div>  
-        <button  id="api-key-button" class="button">GET API KEY</button>
+        <button  id="api-key-button" class="button">GET NEW API KEY</button>
+      </br>
+      <a href="/apikey.html">already a veestream user? get your key</a>
       </form>
     </div>
   </div>
@@ -272,15 +274,15 @@ paypal
           const transaction = details.purchase_units[0].payments.captures[0];
 transactionKey= transaction.id 
           alert(
-            'Transaction of you ' +
+            'Transaction' +
             transaction.status +
             ': ' +
             transaction.id +
             '\n\nSee console for all available details'
           );
-          // When ready to go live, remove the alert and show a success message within this page. For example:
-          // var element = document.getElementById('paypal-button-container');
-          // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+           var element = document.getElementById('paypal-button-container');
+           element.innerHTML = `<p>Thank you for your payment!. Your transaction Id is ${transaction.id}</p>`;
           // Or go to another URL:  actions.redirect('thank_you.html');
         });
       },

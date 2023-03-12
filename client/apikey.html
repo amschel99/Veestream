@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Veestream</title>
+    <meta name="title" content="Doomout">
+    <meta name="description" content="A video streaming API for easy video integration on the web and native platforms.">
+    <meta name="keywords" content="video, video streaming, API, video cms,low latency, flexible api">
+    <meta name="author" content="@amschel">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://veestream.tech">
+    <meta property="og:title" content="Veestream">
+    <meta property="og:description" content="An efficient solution for integrating video content on the web and native platforms.">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://veestream.tech/">
+    <meta property="twitter:title" content="Veestream">
+    <meta property="twitter:description" content="A video streaming API for easy video integration on the web and native platforms.">
+    <link href="images/thumbnail.png" rel="apple-touch-icon">
+    <link href="images/thumbnail.png" rel="shortcut icon">
+    <link href="css/styles.css" rel="stylesheet">
+  </head>
+<body>
+    <form class='form' name='doomoutForm' method='POST' action="http://localhost:8000/generate-api-key/existing"><input type='hidden' name='form-name' value='doomoutForm' />
+       
+        <div class="group">
+          <input type="email" name="email" placeholder="&nbsp;" autocomplete="off" required>
+          <label for="email">Email</label>
+          <span class="border"></span>
+        </div>
+        <div class="group">
+          <input type="password" name="password" placeholder="&nbsp;" autocomplete="off" required>
+          <label for="email">Password</label>
+          <span class="border"></span>
+        </div>
+       <div id="paypal-button-container"></div>  
+        <button  id="api-key-button" class="button">See your API key</button>
+     
+      </form> 
+      
+      <script>
+         const getApiKeyButton= document.getElementById("api-key-button")
+         const baseUrl = window.location.protocol + "//" + window.location.host;
+         
+getApiKeyButton.addEventListener('click',async (e)=>{
+  const emailInput = document.querySelector('input[name="email"]');
+const email = emailInput.value;
+const passwordInput = document.querySelector('input[name="password"]');
+const password = passwordInput.value;
+
+  e.preventDefault()
+
+
+
+
+
+const res = await fetch(`${baseUrl}/generate-api-key/existing`, {
+method: 'POST',
+headers: {
+  'Content-Type': 'application/json',
+
+},
+body: JSON.stringify({ email,password })
+});
+let data;
+
+if(res.status!==409){
+    const {apikey}=await res.json()
+   data=apikey
+   // Create a new span element
+ 
+const span = document.createElement("span");
+
+// Set the id and class attributes of the span element
+span.setAttribute("id", "api");
+span.setAttribute("class", "api-credential");
+
+// Add text content to the span element
+span.textContent = data;
+span.style.width = "75vw";
+span.style.marginInline = "12.5vw";
+span.style.marginBlock = "10px";
+// Add a click event listener to the span element
+span.addEventListener("click", function() {
+  // Copy the text content of the span element to the clipboard
+  const text = this.textContent;
+  navigator.clipboard.writeText(text);
+  alert('copied to clipboard')
+});
+
+// Add the span element to the document body
+document.body.appendChild(span);
+
+}
+else{
+    data=await res.json()
+    // Create a new paragraph element
+
+const paragraph = document.createElement("p");
+
+// Set the id attribute of the paragraph element
+paragraph.setAttribute("id", "err");
+
+// Add text content to the paragraph element
+paragraph.textContent = data;
+paragraph.style.width = "75vw";
+paragraph.style.marginInline = "12.5vw";
+paragraph.style.marginBlock = "10px";
+// Add the paragraph element to the document body
+document.body.appendChild(paragraph);
+
+}
+
+
+  
+  
+
+
+})
+
+
+// Add click event listener to the API span
+
+      </script>
+</body>
+</html>
