@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import { routerVideos } from './routes/videos.js'
 import { router } from './routes/video.js'
 import { routerApiKey } from './routes/apiKey.js'
-import { routerPay } from './routes/pay.js'
+
 import { connectDb } from './db/dbConfig.js'
 import swaggerUi from 'swagger-ui-express'
 import path from 'path'
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use("/checkout",routerPay)
+
 app.use("/generate-api-key",routerApiKey)
 app.use(validateApiKey)
 app.use('/video',router)
