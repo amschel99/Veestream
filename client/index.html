@@ -25,7 +25,7 @@
 <body>
  
   <script src="https://www.paypal.com/sdk/js?client-id=AbyiH6RWVmLK3byU5W0DyZ8bRN4iLmqMQ5y28zrpkVpqWi1fif3p-jklMHZecbrm-tJ-CDz_0Wv2RbKQ&currency=USD"></script>
-  <div style="bottom:25px;overflow:scroll" class="modal">
+  <div style="bottom:20px;overflow:scroll" class="modal">
   <button type="button" class="modal-close modal-toggle"><i class="icon" data-feather="x"></i><span class="hide-mobile">ESC</span></button>
   <div class="modal-content">
     <div class="success">
@@ -131,6 +131,7 @@
   <script src="./js/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/scripts.min.js"></script>
 <script>
+  let transactionKey=null;
 const baseUrl = window.location.protocol + "//" + window.location.host;
   // Close modal on escape key
   document.getElementById('go-to-docs').href='./docs.html'
@@ -200,17 +201,24 @@ const email = emailInput.value;
 const passwordInput = document.querySelector('input[name="password"]');
 const password = passwordInput.value;
     e.preventDefault()
+    if(!transactionKey){
+      return alert(`payment was not made or was unsucessful`)
+    }
+
+
+
 
 const res = await fetch(`${baseUrl}/generate-api-key`, {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+
   },
-  body: JSON.stringify({ email,password })
+  body: JSON.stringify({ email,password,transactionKey })
 });
 
     const {apikey}=await res.json()
-   
+
     document.getElementsByClassName('form-content')[0].classList.add('form-content-hide');
     document.getElementsByClassName('success')[0].classList.add('success-show');
     if(res.status==409){
@@ -262,6 +270,7 @@ paypal
           // Successful capture! For dev/demo purposes:
           console.log('Capture result', details, JSON.stringify(details, null, 2));
           const transaction = details.purchase_units[0].payments.captures[0];
+transactionKey= transaction.id 
           alert(
             'Transaction of you ' +
             transaction.status +
