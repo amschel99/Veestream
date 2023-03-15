@@ -45,10 +45,7 @@ export const uploadVideo = async (req, res) => {
     const { apikey } = req.headers
     
     try { 
-      const videosQuantity=await VideoModel.find({apikey})
-      if(videosQuantity.length>5){
-        return res.json(`You can only upload 5 files in the test version, the live api will be launched soon`)
-      }
+     
       const apiKeyDocument = await accountModel.findOne({ apikey });
       const container = apiKeyDocument.container;
       const containerClient = blobServiceClient.getContainerClient(container);
@@ -77,8 +74,8 @@ const blockBlobClient = containerClient.getBlockBlobClient(blobName);
       // Delete the uploaded video file from the server's file system
       fs.unlink(localFilePath, (err) => {
         if (err) {
-          console.error(err);
-          return;
+          console.error(err+'code1');
+        
         }
       });
 
