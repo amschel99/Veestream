@@ -75,7 +75,7 @@ const blockBlobClient = containerClient.getBlockBlobClient(blobName);
       fs.unlink(localFilePath, (err) => {
         if (err) {
           console.error(err+'code1');
-        
+        return;
         }
       });
 
