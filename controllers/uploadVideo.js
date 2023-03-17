@@ -50,7 +50,7 @@ export const uploadVideo = async (req, res) => {
       const container = apiKeyDocument.container;
       const containerClient = blobServiceClient.getContainerClient(container);
 
-      const blobName = req.file.originalname;
+      const blobName = name;
       const blobStream = new PassThrough();
 
 const localFilePath = `./videos/${blobName}`;
