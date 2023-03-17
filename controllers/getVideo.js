@@ -44,7 +44,7 @@ console.log(url)
         'Content-Range': `bytes ${start}-${end}/${downloadResponse.contentLength}`,
         'Accept-Ranges': 'bytes',
         'Content-Length': chunksize,
-        'Content-Type': downloadResponse.contentType,
+        'Content-Type': 'video/mp4',
       });
       downloadResponse.readableStreamBody.pipe(res, { end: true, start, end });
     }
