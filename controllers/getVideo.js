@@ -14,19 +14,20 @@ export const getVideo = async (req, res) => {
   try {
     
     const {container}= await Account.findOne({apikey:req.headers.apikey})
-    console.log(container)//successs
+    
     const containerClient = blobServiceClient.getContainerClient(container);
     const { url } = await Video.findOne({ _id: req.params.id });
     const blobName = path.basename(url)//
-    console.log(blobName+"this is the blob name")
+    
     const contentType = mime.getType(blobName); 
-console.log(url)
+
     const blobClient = containerClient.getBlobClient(blobName);
     const downloadResponse = await blobClient.download();
     const properties = await blobClient.getProperties();
     const fileSize = properties.contentLength;
-    //res.setHeader('Content-Type', contentType);
-    //res.setHeader('Content-Length', downloadResponse.contentLength);
+    console.log(fileSize)
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Content-Length', downloadResponse.contentLength);
 
     const range = req.headers.range;
     if (!range) {
