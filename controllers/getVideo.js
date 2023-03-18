@@ -23,9 +23,10 @@ export const getVideo = async (req, res) => {
 console.log(url)
     const blobClient = containerClient.getBlobClient(blobName);
     const downloadResponse = await blobClient.download();
-
-    res.setHeader('Content-Type', contentType);
-    res.setHeader('Content-Length', downloadResponse.contentLength);
+    const properties = await blobClient.getProperties();
+    const fileSize = properties.contentLength;
+    //res.setHeader('Content-Type', contentType);
+    //res.setHeader('Content-Length', downloadResponse.contentLength);
 
     const range = req.headers.range;
     if (!range) {
@@ -38,11 +39,11 @@ console.log(url)
 
       const positions = range.replace(/bytes=/, '').split('-');
       const start = parseInt(positions[0], 10);
-      const end = positions[1] ? parseInt(positions[1], 10) : downloadResponse.contentLength - 1;
+      const end = positions[1] ? parseInt(positions[1], 10) : fileSize - 1;
       const chunksize = (end - start) + 1;
 
       res.writeHead(206, {
-        'Content-Range': `bytes ${start}-${end}/${downloadResponse.contentLength}`,
+        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
         'Accept-Ranges': 'bytes',
         'Content-Length': chunksize,
         'Content-Type': 'video/mp4',
