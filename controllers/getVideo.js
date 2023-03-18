@@ -20,7 +20,7 @@ export const getVideo = async (req, res) => {
     const blobName = path.basename(url)//
     
     const contentType = mime.getType(blobName); 
-
+console.log(contentType)
     const blobClient = containerClient.getBlobClient(blobName);
     const downloadResponse = await blobClient.download();
     const properties = await blobClient.getProperties();
@@ -47,7 +47,7 @@ export const getVideo = async (req, res) => {
         'Content-Range': `bytes ${start}-${end}/${fileSize}`,
         'Accept-Ranges': 'bytes',
         'Content-Length': chunksize,
-        'Content-Type': 'video/mp4',
+        'Content-Type': contentType,
       });
       downloadResponse.readableStreamBody.pipe(res, { end: true, start, end });
     }
