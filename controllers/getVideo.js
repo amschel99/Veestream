@@ -30,8 +30,9 @@ console.log(url)
     const range = req.headers.range;
     if (!range) {
       console.log('no range');
-      res.status(200);
-      downloadResponse.readableStreamBody.pipe(res);
+      res.status(416);
+      res.end();
+      return;
     } else {
       console.log(range);
 
