@@ -1801,6 +1801,9 @@ a:hover {
     .h2 {
         font-size: 30px
     }
+    #pay-cont{
+        margin-top: 250px;
+    }
 }
 
 /*# sourceMappingURL=styles.css.map */
@@ -1820,6 +1823,9 @@ a:hover {
 @media only screen and (min-width: 1200px) {
     .screen-wrapper {
         padding: 0 12%;
+    }
+    #pay-cont{
+        margin-top: 100px;
     }
 }
 

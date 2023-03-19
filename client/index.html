@@ -25,9 +25,9 @@
 <body>
  
   <script src="https://www.paypal.com/sdk/js?client-id=AbyiH6RWVmLK3byU5W0DyZ8bRN4iLmqMQ5y28zrpkVpqWi1fif3p-jklMHZecbrm-tJ-CDz_0Wv2RbKQ&currency=USD"></script>
-  <div id="modal-cont" style="bottom:5px;overflow:scroll" class="modal">
+  <div id="modal-cont" style="bottom:0px;overflow:scroll;margin-top: 30px;padding-top: 20px;" class="modal">
   <button type="button" class="modal-close modal-toggle"><i class="icon" data-feather="x"></i><span class="hide-mobile">ESC</span></button>
-  <div class="modal-content">
+  <div id="pay-cont"  class="modal-content">
     <div class="success">
 
       <h2 class="modal-title first-name" id="title-name"></h2>
@@ -57,7 +57,7 @@
        <div id="paypal-button-container"></div>  
         <button  id="api-key-button" class="button">GET NEW API KEY</button>
       </br>
-      <a href="/apikey.html">already a veestream user? get your key</a>
+
       </form>
     </div>
   </div>
@@ -80,6 +80,7 @@
       <p >Get started by subscribing to the API key base plan at <h3>9 USD.</h3> <span><h3> 15GB memory valid for 6 months</h3></span></p>
       <p>Upload upto 30 videos each of maximum 500mb</p>
       <button id="get-started" class="button modal-toggle">Get started</button>
+      <a href="/apikey.html">already a veestream user? get your key</a>
      <a id="go-to-docs" ><button  class="button ">Go to API docs</button></a> 
       <p class="subtitle">Integrate with web and mobile platforms </p>
     </div>
@@ -137,7 +138,7 @@
 <script src="js/scripts.min.js"></script>
 <script>
  if (document.getElementById("paypal-button-container").hasChildNodes()) {
-  document.getElementById("modal-cont").style.bottom = '0px';
+  document.getElementById("pay-cont").style.marginTop = '450px';
 }
 
   let transactionKey=null;
