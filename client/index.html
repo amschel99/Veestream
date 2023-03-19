@@ -25,7 +25,7 @@
 <body>
  
   <script src="https://www.paypal.com/sdk/js?client-id=AbyiH6RWVmLK3byU5W0DyZ8bRN4iLmqMQ5y28zrpkVpqWi1fif3p-jklMHZecbrm-tJ-CDz_0Wv2RbKQ&currency=USD"></script>
-  <div style="bottom:10px;overflow:scroll" class="modal">
+  <div id="modal-cont" style="bottom:5px;overflow:scroll" class="modal">
   <button type="button" class="modal-close modal-toggle"><i class="icon" data-feather="x"></i><span class="hide-mobile">ESC</span></button>
   <div class="modal-content">
     <div class="success">
@@ -136,6 +136,9 @@
   <script src="./js/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/scripts.min.js"></script>
 <script>
+  if(document.getElementById("paypal-button-container").children){
+    document.getElementById("modal-cont").style.bottom='0px'
+  }
   let transactionKey=null;
 const baseUrl = window.location.protocol + "//" + window.location.host;
   // Close modal on escape key
