@@ -1,4 +1,3 @@
- Veestream API Documentation pre { background-color: #282c34; color: #abb2bf; border: 1px solid #abb2bf; padding: 10px; font-size: 14px; line-height: 1.4; font-family: 'Courier New', Courier, monospace; overflow-x: auto; white-space: pre-wrap; border-radius: 5px; }
 
 Veestream API Documentation
 ===========================
