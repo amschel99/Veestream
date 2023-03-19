@@ -37,13 +37,13 @@
 	<h3>Upload Video</h3>
 	<p>This endpoint allows a user with an API key to upload one video at a time. When you signed up, an azure blob storage container is created for you. All the video files you upload will be stored on that container.</p>
 	<pre><code>POST /video/upload</code></pre>
-	<h6>Headers</h6>
+	<h4>Headers</h4>
 <p>Use the following header in your  request for the upload endpoint:</p>
 <pre><code class="language-bash">apikey: yourapikey</code></pre>
-<h6>Body</h6>
+<h4>Body</h4>
 <p>Include name in the request body. This should be a string, the name for your video file .</p>
 <pre><code class="language-bash">name:"video name"</code></pre>
-<h6>File Upload</h6>
+<h3>File Upload</h3>
 <p>To upload a file, send a POST request to the API endpoint and include the file in the request. The name property of the file should be video.</p>
 <p>The following example demonstrates how to upload a file using curl</p>
 <pre><code class="language-javascript">curl -X POST -H "apiKey: b7642f0d6db02f383498e7f7edd353597ad8e5fe" -F "video=@/home/amschel/Downloads/honey.mp4" -F "name=My Video" http://veestream.tech/video/upload
@@ -68,7 +68,7 @@
 	.catch(error => console.error(error));
 	
 	</code></pre>
-	
+	<a href="https://github.com/amschel99/veestream-code-samples/blob/master/uploadVideo.html">Full Example on github</a>
 
 		<p>Example response</p>
 		<pre><code class="language-javascript">
@@ -109,6 +109,7 @@ Content-Type: application/json
 		
 		
 	</code></pre>
+	<a href="https://github.com/amschel99/veestream-code-samples/blob/master/playVideo.html">Full example on github</a>
 	<h3>Get Video Metadata</h3>
 	<pre><code>GET /video/:id/data</code></pre>
 	<p>This allows you to get metadata about a particular video. We pass the id parameter to specify the video we are requesting data for. id is from _id field that each video has.</p>

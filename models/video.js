@@ -9,11 +9,13 @@ const  videoSchema=new mongoose.Schema({
       
       poster: {
         type: String,
+        required: true
      
       },
     
       gif: {
         type: String,
+        required: true
        
       },
       url: {
