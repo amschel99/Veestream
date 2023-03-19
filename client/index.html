@@ -25,7 +25,7 @@
 <body>
  
   <script src="https://www.paypal.com/sdk/js?client-id=AbyiH6RWVmLK3byU5W0DyZ8bRN4iLmqMQ5y28zrpkVpqWi1fif3p-jklMHZecbrm-tJ-CDz_0Wv2RbKQ&currency=USD"></script>
-  <div style="overflow:scroll" class="modal">
+  <div style="bottom:10px;overflow:scroll" class="modal">
   <button type="button" class="modal-close modal-toggle"><i class="icon" data-feather="x"></i><span class="hide-mobile">ESC</span></button>
   <div class="modal-content">
     <div class="success">
@@ -42,8 +42,7 @@
 
 
       <form class='form' name='doomoutForm' method='POST' action="http://localhost:8000/generate-api-key"><input type='hidden' name='form-name' value='doomoutForm' />
-             <p >Subscribe for the API key base plan at <h3>9 USD.</h3> <span><h3> 15GB memory valid for 6 months</h3></span></p>
-             <p>Upload upto 30 videos each of maximum 500mb</p>
+        
         <div class="group">
           
           <input id="email-input" type="email" name="email" placeholder="&nbsp;" autocomplete="off" required>
@@ -78,6 +77,8 @@
           <b>Marketing and advertising</b>
         </span>
       </h1>
+      <p >Get started by subscribing to the API key base plan at <h3>9 USD.</h3> <span><h3> 15GB memory valid for 6 months</h3></span></p>
+      <p>Upload upto 30 videos each of maximum 500mb</p>
       <button id="get-started" class="button modal-toggle">Get started</button>
      <a id="go-to-docs" ><button  class="button ">Go to API docs</button></a> 
       <p class="subtitle">Integrate with web and mobile platforms </p>
