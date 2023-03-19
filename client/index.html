@@ -39,11 +39,13 @@
     </div>
     <div class="form-content">
 
-      <p class="modal-title">Get an API key to use veestream REST API</p>
+
 
       <form class='form' name='doomoutForm' method='POST' action="http://localhost:8000/generate-api-key"><input type='hidden' name='form-name' value='doomoutForm' />
-       
+             <p >Subscribe for the API key base plan at <h3>9 USD.</h3> <span><h3> 15GB memory valid for 6 months</h3></span></p>
+             <p>Upload upto 30 videos each of maximum 500mb</p>
         <div class="group">
+          
           <input id="email-input" type="email" name="email" placeholder="&nbsp;" autocomplete="off" required>
           <label for="email">Email</label>
           <span class="border"></span>
@@ -260,7 +262,7 @@ paypal
             {
               amount: {
                 currency_code: "USD",
-                value: '1.00' // Change this to the amount you want to charge
+                value: '9.00' // Change this to the amount you want to charge
               }
             }
           ]

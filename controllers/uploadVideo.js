@@ -45,7 +45,16 @@ export const uploadVideo = async (req, res) => {
     const { apikey } = req.headers
     
     try { 
-     
+      const fileSizeLimit = 500 * 1024 * 1024; // 500 MB
+
+      if (!req.headers['content-length'] || Number(req.headers['content-length']) > fileSizeLimit) {
+        return res.status(400).json({ message: 'File size limit exceeded (500MB)' });
+      }
+     const numberOfVideos=await VideoModel.find({apikey})
+     if(numberOfVideos>=30){
+      return res.status(401).json(`maximum video limit reached, upgrade your subscription`)
+
+     }
       const apiKeyDocument = await accountModel.findOne({ apikey });
       const container = apiKeyDocument.container;
       const containerClient = blobServiceClient.getContainerClient(container);
