@@ -136,9 +136,10 @@
   <script src="./js/jquery/3.4.1/jquery.min.js"></script>
 <script src="js/scripts.min.js"></script>
 <script>
-  if(document.getElementById("paypal-button-container").children){
-    document.getElementById("modal-cont").style.bottom='0px'
-  }
+ if (document.getElementById("paypal-button-container").hasChildNodes()) {
+  document.getElementById("modal-cont").style.bottom = '0px';
+}
+
   let transactionKey=null;
 const baseUrl = window.location.protocol + "//" + window.location.host;
   // Close modal on escape key
