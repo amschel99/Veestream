@@ -86,8 +86,14 @@ const blockBlobClient = containerClient.getBlockBlobClient(blobName);
     const extraData={poster:`/video/${videoMetadata._id}/poster`,gif:`/video/${videoMetadata._id}/gif`,name,url}
     console.log(extraData)
     console.log(url)
-   const response= await VideoModel.findOneAndUpdate({url},extraData)
+    try{
+      const response= await VideoModel.findOneAndUpdate({url},extraData)
       return res.status(200).json(response);
+    }
+    catch(e){
+return res.status(500).json(`failed to update`)
+    }
+   
     } catch (err) {
       return res.status(500).json(err.message);
     }
