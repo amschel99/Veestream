@@ -34,7 +34,7 @@
           <label for="email">Password</label>
           <span class="border"></span>
         </div>
-       <div id="paypal-button-container"></div>  
+      
         <button  id="api-key-button" class="button">See your API key</button>
      
       </form> 
@@ -54,7 +54,6 @@ const password = passwordInput.value;
 
 
 
-
 const res = await fetch(`${baseUrl}/generate-api-key/existing`, {
 method: 'POST',
 headers: {
@@ -69,7 +68,11 @@ if(res.status!==409){
     const {apikey}=await res.json()
    data=apikey
    // Create a new span element
- 
+   if(   document.getElementById("err")){
+
+   
+   document.getElementById("err").style.display='none'
+   }
 const span = document.createElement("span");
 
 // Set the id and class attributes of the span element
@@ -94,7 +97,7 @@ document.body.appendChild(span);
 
 }
 else{
-    data=await res.json()
+      data=await res.json()
     // Create a new paragraph element
 
 const paragraph = document.createElement("p");

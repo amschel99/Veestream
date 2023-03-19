@@ -68,30 +68,7 @@
 	.catch(error => console.error(error));
 	
 	</code></pre>
-	<p>The following example demonstrates how to upload a file in flutter</p>
-	<pre>
-		import 'dart:io';
-		import 'package:http/http.dart' as http;
-		
-		final String apiKey = 'b7642f0d6db02f383498e7f7edd353597ad8e5fe';
-		final String url = 'http://veestream.tech/video/upload';
-		final String filePath = '/home/amschel/Downloads/honey.mp4';
-		
-		Future<void> uploadFile() async {
-		  final file = File(filePath);
-		
-		  final request = http.MultipartRequest('POST', Uri.parse(url));
-		  request.headers.addAll({'apiKey': apiKey});
-		  request.files.add(http.MultipartFile.fromBytes('video', await file.readAsBytes()));
-		  request.fields['name'] = 'My Video'; // add a field to the request
-		
-		  final response = await request.send();
-		  final responseJson = await http.Response.fromStream(response).then((res) => res.body);
-		
-		  print(responseJson);
-		}
-		
-		</code></pre>
+	
 
 		<p>Example response</p>
 		<pre><code class="language-javascript">
@@ -111,42 +88,38 @@ Content-Type: application/json
 }
 
 		</code></pre>
-	<h3>Stream Video</h3>
+	<h3>Get video url for streaming</h3>
 	<pre><code>GET /video/:id</code></pre>
-	<p>This endpoint creates a readable stream from your video file in azure to the client and the video is streamed in chunks.When you upload a video, you will get a response with an _id property. use this _id as a params inthe /video endpoint to a stream a single video .	<pre><code>GET /video/61f19d85d28a103995b1816c</code></pre> </p>
-	<p>Below is javascript code that can be used to make the request to the endpoint and play the video using the Html5 video tag.</p>
+	<p>This endpoint returns a valid video url that can be used as an src attribute of the Html5 video tag to play videos in browsers. 	<pre><code>GET /video/61f19d85d28a103995b1816c</code></pre> </p>
+	<p>To make a request to this endpoint, pass a valid apikey in the request headers. If the apikey is wrong, you will get a 401 anauthorized response.</p>
 	<pre><code>
-		const videoUrl = "http://veestream.tech/video/61f19d85d28a103995b1816c";
-		const apiKey = "b7642f0d6db02f383498e7f7edd353597ad8e5fe";
-		const videoTag = document.getElementById("my-video");
+				const videoPlayer = document.querySelector('video');
+				const apiKey = 'your_api_key_here';
+				const videoId = 'video_id_here';
+				const apiUrl = `http://veestream.tech/video/${videoId}`;
+				
+				fetch(apiUrl, { headers: { apikey: apiKey } })
+					.then(response => response.json())
+					.then(videoUrl => {
+						videoPlayer.src = videoUrl;
+						videoPlayer.play();
+					})
+					.catch(error => console.error(error));
 		
-		const headers = {
-		  "apikey": apiKey
-		};
 		
-		fetch(videoUrl, {
-		  method: "GET",
-		  headers: headers
-		})
-		.then(response => response.blob())
-		.then(blob => {
-		  const videoBlobUrl = URL.createObjectURL(blob);
-		  videoTag.src = videoBlobUrl;
-		})
-		.catch(error => console.error(error));
 		
 	</code></pre>
 	<h3>Get Video Metadata</h3>
 	<pre><code>GET /video/:id/data</code></pre>
 	<p>This allows you to get metadata about a particular video. We pass the id parameter to specify the video we are requesting data for. id is from _id field that each video has.</p>
 	<p>Below is an example curl command</p>
-	<pre><code>curl -X GET -H "apikey: b7642f0d6db02f383498e7f7edd353597ad8e5fe" http://veestram.tech/video/61f19d85d28a103995b1816c/data
+	<pre><code>curl -X GET -H "apikey: b7642f0d6db02f383498e7f7edd353597ad8e5fe" http://veestream.tech/video/61f19d85d28a103995b1816c/data
 	</code></pre>
 	<p>Below is the example code in javascript for this endpoint</p>
 	<pre>
 const axios = require('axios');
 
-const url = 'http://veestram.tech/video/61f19d85d28a103995b1816c/data';
+const url = 'http://veestream.tech/video/61f19d85d28a103995b1816c/data';
 
 const headers = {
   apiKey: 'b7642f0d6db02f383498e7f7edd353597ad8e5fe',
