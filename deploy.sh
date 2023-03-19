@@ -4,4 +4,6 @@ echo "bringing down our service"
 echo "using docker-compose up -d"
 
 docker-compose up -d
-# useful curl command: curl -X POST -H "apiKey: 59959534HX078772Rae8569f7c8bc5fafb6d7e0286b396bcc83551de4" -F "video=@/home/amschel/Downloads/honey.mp4" -F "name=thoughts"  http://localhost:8000/video/upload
+# useful curl command: curl -X POST -H "apiKey: 0dd68372a4b06ef3ad057fbb8a0f4f27ccda187d" -F "video=@/home/amschel/Downloads/honey.mp4" -F "name=thoughts"  http://localhost:8000/video/upload
+//http://localhost:8000/video/64160e6de90ee70794be9496
+
