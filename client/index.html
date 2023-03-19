@@ -44,7 +44,7 @@
       <form class='form' name='doomoutForm' method='POST' action="http://localhost:8000/generate-api-key"><input type='hidden' name='form-name' value='doomoutForm' />
        
         <div class="group">
-          <input type="email" name="email" placeholder="&nbsp;" autocomplete="off" required>
+          <input id="email-input" type="email" name="email" placeholder="&nbsp;" autocomplete="off" required>
           <label for="email">Email</label>
           <span class="border"></span>
         </div>
@@ -76,7 +76,7 @@
           <b>Marketing and advertising</b>
         </span>
       </h1>
-      <button  class="button modal-toggle">Get started</button>
+      <button id="get-started" class="button modal-toggle">Get started</button>
      <a id="go-to-docs" ><button  class="button ">Go to API docs</button></a> 
       <p class="subtitle">Integrate with web and mobile platforms </p>
     </div>
@@ -281,12 +281,20 @@ transactionKey= transaction.id
             '\n\nSee console for all available details'
           );
 
-           var element = document.getElementById('paypal-button-container');
-           element.innerHTML = `<p>Thank you for your payment!. Your transaction Id is ${transaction.id}</p>`;
+
+           window.location.href='#email-input'
           // Or go to another URL:  actions.redirect('thank_you.html');
         });
       },
+      onError: function (error) {
+      console.error('PayPal error', error);
+      alert('An error occurred during the PayPal transaction. Please try again later.');
+      window.location.href='#get-started'
+    }
+  
+      
     })
+    
     .render('#paypal-button-container');
 </script>
 
