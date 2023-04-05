@@ -11,8 +11,11 @@ dotenv.config();
 const {AZURE_CONNECTION_STRING}=config
 export const getVideoThumbnail = async (req, res) => {
   try {
-    const {apikey}= req.headers
-    const { url } = await Video.findOne({ _id: req.params.id });
+   
+    const { url,apikey } = await Video.findOne({ _id: req.params.id });
+    if(req.headers.apikey!==apikey){
+      res.status(400).json(`api is  key incorrect`)
+    }
     const { container } = await Account.findOne({ apikey });
     console.log(container)
     console.log(apikey)
