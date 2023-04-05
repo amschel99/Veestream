@@ -1,3 +1,14 @@
+import thumbsupply from 'thumbsupply';
+import Video from '../models/video.js';
+import azure from 'azure-storage';
+import fs from 'fs';
+import Account from '../models/apiKey.js';
+import dotenv from 'dotenv';
+import path from 'path';
+import ffmpeg from 'fluent-ffmpeg';
+import { config } from '../config/config.js';
+dotenv.config();
+const {AZURE_CONNECTION_STRING}=config
 export const getVideoThumbnail = async (req, res) => {
   try {
     const { url, apikey } = await Video.findOne({ _id: req.params.id });
