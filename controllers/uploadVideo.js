@@ -29,7 +29,7 @@ const upload = multer({
   limits: {
     fileSize: Infinity, // Remove the limit on file size
   },
-}).single('video');
+}).single('file');
 
 export const uploadVideo = async (req, res) => {
   upload(req, res, async (err) => {

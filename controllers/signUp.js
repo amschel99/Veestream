@@ -11,12 +11,10 @@ export const signUp= async (req,res)=>{
     
  
     try{
-      if(!req.body.transactionKey){
-        return res.json(`transaction id was not found`)
-      }
+      
         console.log(req.body)
-        const{email,transactionKey}=req.body
-        const apikey=transactionKey+generateApiKey()
+        const{email}=req.body
+        const apikey=generateApiKey()
         const container= await createNewUniqueContainer()
         const account={apikey,container,email,password:req.body.password}
         if(container instanceof Error){
