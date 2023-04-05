@@ -1,13 +1,3 @@
-import thumbsupply from 'thumbsupply';
-import Video from '../models/video.js';
-import azure from 'azure-storage';
-import fs from 'fs';
-import Account from '../models/apiKey.js';
-import dotenv from 'dotenv';
-import path from 'path';
-import { config } from '../config/config.js';
-dotenv.config();
-const {AZURE_CONNECTION_STRING}=config
 export const getVideoThumbnail = async (req, res) => {
   try {
     const { url, apikey } = await Video.findOne({ _id: req.params.id });
@@ -21,10 +11,14 @@ export const getVideoThumbnail = async (req, res) => {
     // create a write stream for the temporary file
     const tempFileStream = fs.createWriteStream(tempFilePath);
 
-    // download the 2-second video clip to the temporary file
+    // set the start and end range based on the time passed in the query parameter, or default to 0 and 2 seconds respectively
+    const startRange = req.query.start ? parseInt(req.query.start) * 1000000 : 0;
+    const endRange = req.query.end ? parseInt(req.query.end) * 1000000 : 2000000;
+
+    // download the video clip to the temporary file
     blobService.getBlobToStream(container, blobName, tempFileStream, {
-      startRange:  10000000,
-      endRange: 11999999, // 2 seconds * 1000 milliseconds/second * 1000 bytes/millisecond = 2,000,000 bytes
+      startRange: startRange,
+      endRange: endRange,
     }, (error, result, response) => {
       if (error) {
         console.error(error);

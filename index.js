@@ -33,9 +33,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/generate-api-key",routerApiKey)
 app.use(validateApiKey)
-app.use('/video',router)
+app.use('/file',router)
 
-app.use("/videos",routerVideos)
+app.use("/files",routerVideos)
 
 app.use(errorHandler)
 const mongoUrl=`mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin`

@@ -9,6 +9,7 @@ import ffmpeg from 'fluent-ffmpeg';
 import { config } from '../config/config.js';
 dotenv.config();
 const {AZURE_CONNECTION_STRING}=config
+
 export const getVideoGif = async (req, res) => {
   try {
     const { url, apikey } = await Video.findOne({ _id: req.params.id });
@@ -16,16 +17,19 @@ export const getVideoGif = async (req, res) => {
     const blobService = azure.createBlobService(AZURE_CONNECTION_STRING);
     const blobName = path.basename(url);
 
+    const start = req.query.start || 0;
+    const end = req.query.end || 2;
+
     // create a temporary file path to save the video clip
     const tempFilePath = `videos/temp-${Date.now()}-${blobName}`;
 
     // create a write stream for the temporary file
     const tempFileStream = fs.createWriteStream(tempFilePath);
 
-    // download the 2-second video clip to the temporary file
+    // download the video clip to the temporary file
     blobService.getBlobToStream(container, blobName, tempFileStream, {
-      startRange:  10000000,
-      endRange: 11999999, // 2 seconds * 1000 milliseconds/second * 1000 bytes/millisecond = 2,000,000 bytes
+      startRange: start * 1000000, // convert seconds to microseconds
+      endRange: end * 1000000, // convert seconds to microseconds
     }, (error, result, response) => {
       if (error) {
         console.error(error);
@@ -35,8 +39,8 @@ export const getVideoGif = async (req, res) => {
 
         // Generate the gif file from the downloaded video file
         ffmpeg(tempFilePath)
-          .setStartTime(0)
-          .setDuration(2)
+          .setStartTime(start)
+          .setDuration(end - start)
           .output(gifFilePath)
           .on('end', () => {
             // Send the gif to the client
