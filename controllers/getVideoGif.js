@@ -12,7 +12,9 @@ const {AZURE_CONNECTION_STRING}=config
 
 export const getVideoGif = async (req, res) => {
   try {
-    const { url, apikey } = await Video.findOne({ _id: req.params.id });
+    
+    const {apikey}= req.headers
+    const { url } = await Video.findOne({ _id: req.params.id });
     const { container } = await Account.findOne({ apikey });
     const blobService = azure.createBlobService(AZURE_CONNECTION_STRING);
     const blobName = path.basename(url);
