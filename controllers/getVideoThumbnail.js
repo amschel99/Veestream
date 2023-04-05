@@ -13,6 +13,8 @@ export const getVideoThumbnail = async (req, res) => {
   try {
     const { url, apikey } = await Video.findOne({ _id: req.params.id });
     const { container } = await Account.findOne({ apikey });
+    console.log(container)
+    console.log(apikey)
     const blobService = azure.createBlobService(AZURE_CONNECTION_STRING);
     const blobName = path.basename(url);
 
