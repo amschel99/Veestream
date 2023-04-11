@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./navbar.css";
-
+import {Link} from "react-router-dom"
+import { Typography } from "@mui/material";
 function Navbar(): JSX.Element {
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -13,7 +14,9 @@ function Navbar(): JSX.Element {
 
   return (
     <header>
-      <h3>Veestream</h3>
+      <Typography sx={{color:'yellow', textDecoration:'none'}} variant='h5' component={Link} to='/'>Veestream</Typography>
+  
+     
       <nav ref={navRef}>
         <a href="/usecases">Use cases</a>
         <a href="https://rapidapi.com/kariukiamschel9/api/veestream2">Documentation</a>
