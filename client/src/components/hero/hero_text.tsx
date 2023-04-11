@@ -24,7 +24,7 @@ const HeroText = () => {
     <Box
       sx={{
       
-
+textAlign:"center",
         display: "flex",
         flexDirection: "column",
         marginTop: 4,
@@ -59,7 +59,8 @@ const HeroText = () => {
     color="#fff"
     borderRadius={16}
     boxShadow={3}
-    width={{ xs: '100%', md: '30rem' }}
+    sx={{marginX:{xs:"2%", sm:"0"}}}
+    width={{ xs: '96%', md: '30rem' }}
     height={{ xs: 'auto', md: '36rem' }}
     mx={{ xs: 0, md: 2 }}
     my={{ xs: 2, md: 0 }}
@@ -79,7 +80,8 @@ const HeroText = () => {
     color="#fff"
     borderRadius={16}
     boxShadow={3}
-    width={{ xs: '100%', md: '70rem' }}
+    sx={{marginX:{xs:"2%", sm:"0"}}}
+    width={{ xs: '96%', md: '70rem' }}
     
     height={{ xs: 'auto', md: '45rem' }}
     mx={{md: 2 }}
@@ -100,7 +102,8 @@ const HeroText = () => {
     color="#fff"
     borderRadius={16}
     boxShadow={3}
-    width={{ xs: '100%', md: '35rem' }}
+    sx={{marginX:{xs:"2%", sm:"0"}}}
+    width={{ xs: '96%', md: '35rem' }}
     height={{ xs: 'auto', md: '40rem' }}
     mx={{ xs: 0, md: 2 }}
     my={{ xs: 2, md: 0 }}
