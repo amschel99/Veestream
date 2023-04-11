@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import file_manager from "../../../src/images/file_manager.jpg";
+import file_manager from "./images/file_manager.jpg"
 
 
 const HeroImages = () => {
