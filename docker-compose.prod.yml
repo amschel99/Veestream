@@ -10,8 +10,8 @@ services:
       context: .
       args:
         NODE_ENV: production
-      volumes:
-        - ./client:/app/client
+    volumes:
+      - ./client:/app/client
     environment:
       - NODE_ENV=production
       
