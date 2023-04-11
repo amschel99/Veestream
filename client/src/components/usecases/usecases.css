@@ -1,0 +1,47 @@
+.use-cases {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .use-case-card {
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+    background-color:#29335c;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-out;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  .use-case-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .use-case-card h2 {
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #FBBC05;
+  }
+  
+  .use-case-card p {
+    font-size: 14px;
+    color: #fff;
+  }
+  
+  @media screen and (min-width: 960px) {
+    .use-cases {
+      justify-content: space-between;
+      padding: 40px;
+    }
+  
+    .use-case-card {
+      width: calc(33.33% - 20px);
+      height: 250px;
+    }
+  }
+  
