@@ -1,6 +1,6 @@
 [Read the docs on rapidapi.com](https://rapidapi.com/kariukiamschel9/api/veestream2)
 
-While I'd want this  API to be completly free, it utilizes microsoft azure blob storage and an ubuntu virtual machine on azure which are not frees services, so if you are willing to use this API as it is you have to pay for the storage you use. To get started with that, navigate to [rapid api] (https://rapidapi.com/kariukiamschel9/api/veestream2) and choose a subscription that fits your needs.
+While I'd want this  API to be completly free, it utilizes microsoft azure blob storage and an ubuntu virtual machine on azure which are not frees services, so if you are willing to use this API as it is you have to pay for the storage you use. To get started with that, navigate to [rapid api](https://rapidapi.com/kariukiamschel9/api/veestream2) and choose a subscription that fits your needs.
 
 However you can clone this project and use your own azure account details to use this API for free.
 
@@ -11,7 +11,7 @@ The version is Ubuntu 22.04.2 LTS
 
 The host where you are running this should have docker and docker-compose installed.
 
-My ubuntu version has ```Docker version 23.0.1, build a5ee5b1``` and 
+My ubuntu version is ```Docker version 23.0.1, build a5ee5b1``` and 
  ```docker-compose version 1.29.2, build unknown```  installed.
 
 
