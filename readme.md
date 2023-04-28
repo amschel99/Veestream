@@ -48,10 +48,6 @@ NODE_ENV=production
   ```
  
 
-## Contributing
 
-Contributions are always welcome!
- 
- Submit a pull request for a bug fix, feature,  package fix e.t.c
 
 
