@@ -58,3 +58,11 @@ This are the environmental variables that the application needs to run
 
 
 You should have an active azure subscription, navigate to your portal to get the above variables.
+
+For the documentation please navigate to https://rapidapi.com/studio/api_fb71056f-07e9-4b50-bc1f-66e4e7aa2e98/client/_playground_
+
+You can replace the base url with your localhost base url which you use to redirect to the node js server. e.g http://localhost:5000
+
+Also locally, you do not have to include the headers, X-RapidAPI-Host and X-RapidAPI-Key.
+
+But you have to iclude the apikey header which can be generated from the generate-api-key endpoint.
