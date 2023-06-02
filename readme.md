@@ -1,53 +1,60 @@
-[Read the docs on rapidapi.com](https://rapidapi.com/kariukiamschel9/api/veestream2)
+# Node.js API for File Management and Media Manipulation
 
-While I'd want this  API to be completly free, it utilizes microsoft azure blob storage and an ubuntu virtual machine on azure which are not frees services, so if you are willing to use this API as it is you have to pay for the storage you use. To get started with that, navigate to [rapid api](https://rapidapi.com/kariukiamschel9/api/veestream2) and choose a subscription that fits your needs.
+This Node.js API project allows you to upload files to azure blob storage , download files, and generate GIFs and thumbnails from videos using Azure SDKs.
 
-However you can clone this project and use your own azure account details to use this API for free.
+## Features
 
-### PRODUCTION ENVIRONMENT
-The live version of this API application is running on an ubuntu server on microsoft azure.
+- File Upload: Upload files to the cloud storage using Azure SDKs.
+- File Download: Download files from the cloud storage using Azure SDKs.
+- GIF Generation: Generate GIFs from videos using Azure SDKs.
+- Thumbnail Generation: Create thumbnails from videos using Azure SDKs.
 
-The version is Ubuntu 22.04.2 LTS
+## Prerequisites
 
-The host where you are running this should have docker and docker-compose installed.
+Before running the project, ensure you have the following prerequisites:
 
-My ubuntu version is ```Docker version 23.0.1, build a5ee5b1``` and 
- ```docker-compose version 1.29.2, build unknown```  installed.
+- Docker 
+- Docker Compose
 
+The project is a microservices application comprised of a mongo service, nginx for load balancing and the node service.
+To use the application, use docker compose to build the images, then start the containers using docker compose. See the docker-compose files to see the different configurations each of your service needs and ports on your host that should redirect to each of your container.
 
- ### Services
-
- This is a microservices application and 
- 3 services are used.
- 1. mongoDB
- 2. nginx
- 3. veezo (The node app)
-
- Check the [docker compose file](https://github.com/amschel99/Veestream/blob/master/docker-compose.yml) which is used as the base file.
- The [docker-compose.dev file](https://github.com/amschel99/Veestream/blob/master/docker-compose.dev.yml) which has configuarations for the development environment and the [docker-compose.prod file](https://github.com/amschel99/Veestream/blob/master/docker-compose.prod.yml) which has configurations for the production environment.
-
- Also check the [dockerfile](https://github.com/amschel99/Veestream/blob/master/Dockerfile)
-which installs node and ffmpeg on the docker environment and defines some other configurations.
-
-## environment variables
-
-Below are all the environmental variables you need to set up
-```
-
-NODE_ENV=production
-      
-      AZURE_CONNECTION_STRING=${AZURE_CONNECTION_STRING}
-      MONGO_USERNAME=${MONGO_USERNAME}
-       MONGO_PASSWORD=${MONGO_PASSWORD}
-       MONGO_IP=${MONGO_IP}
-       MONGO_PORT=${MONGO_PORT}
-      MONGO_DATABASE=${MONGO_DATABASE} 
-       MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
-      
-  ```
+ ## Environmental variables
  
+``` AZURE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=your-account-name;AccountKey=your-account-key;EndpointSuffix=core.windows.net
+MONGO_USERNAME=your-mongodb-username
+MONGO_PASSWORD=your-mongodb-password
+MONGO_IP=mongo
+MONGO_PORT=27017
+MONGO_DATABASE=your-mongodb-database
+CLIENT_ID=your-azure-client-id
+APP_SECRET=your-app-secret
+AZURE_TENANT_ID=your-azure-tenant-id
+AZURE_CLIENT_ID=your-azure-client-id
+AZURE_CLIENT_SECRET=your-azure-client-secret
+AZURE_SUBSCRIPTION_ID=your-azure-subscription-id
+AZURE_RESOURCE_GROUP=your-azure-resource-group
+AZURE_ACCOUNT_NAME=your-azure-account-name
+
+```
+This are the environmental variables that the application needs to run
+
+| Environment Variable        | Purpose                                   | Where to Obtain                               |
+| --------------------------- | ----------------------------------------- | --------------------------------------------- |
+| AZURE_CONNECTION_STRING     | Azure storage connection string            | Azure  Azure Storage Account          |
+| MONGO_USERNAME              | MongoDB username                          | mongo service section in docker compose|
+| MONGO_PASSWORD              | MongoDB password                          | mongo service section in docker compose|
+| MONGO_IP                    | MongoDB server IP address                  | Use the name of the mongo service (dns)      |
+| MONGO_PORT                  | MongoDB server port                        | Mongo port you set for mongo service     |
+| MONGO_DATABASE              | MongoDB database name                      |any database you'd like to create     |
+| CLIENT_ID                   | Azure client ID                            |  Azure Portal        |
+| APP_SECRET                  | Application secret key                     | Generated for your application                |
+| AZURE_TENANT_ID             | Azure tenant ID                            | Azure Active Directory or Azure Portal        |
+| AZURE_CLIENT_ID             | Azure client ID                            | Azure Active Directory or Azure Portal        |
+| AZURE_CLIENT_SECRET         | Azure client secret                        | Azure Active Directory or Azure Portal        |
+| AZURE_SUBSCRIPTION_ID       | Azure subscription ID                      | Azure Portal or Azure CLI                     |
+| AZURE_RESOURCE_GROUP        | Azure resource group name                  | Azure Portal or Azure CLI                     |
+| AZURE_ACCOUNT_NAME          | Azure storage account name                 | Azure Portal or Azure Storage Account          |
 
 
-
-
+You should have an active azure subscription, navigate to your portal to get the above variables.
