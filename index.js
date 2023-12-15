@@ -27,7 +27,9 @@ app.use(express.json())//allows the server to parse json data
 
 
 
-app.use("/", express.static(path.join(__dirname, ".", "client/dist")));
+app.use("/", (req,res)=>{
+res.status(200).send("API is working fine")
+});
 
 app.use("/usecases", express.static(path.join(__dirname, ".", "client/dist")));
 
@@ -39,16 +41,19 @@ app.use('/file',router)
 app.use("/files",routerVideos)
 
 app.use(errorHandler)
-
+const mongoUrl2="mongodb+srv://amschel:i2SgpeVqFSpPGljD@cluster0.z5dsdnf.mongodb.net"
 const mongoUrl=`mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin`
-connectDb(mongoUrl).
+connectDb(mongoUrl2).
 then(()=>{
     console.log('db connected successfully')
     app.listen(PORT, ()=>{
         console.log(`server up and running bitch `)
     })
 }).
-catch((e)=>console.log(e.message))
+catch((e)=>{
+    console.log(mongoUrl)
+    console.log(e.message)
+})
     
   
 

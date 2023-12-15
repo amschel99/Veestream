@@ -10,6 +10,8 @@ services:
   veezo:
     build: .
     image: docker.io/tefrotech/veezo:v1
+    networks:
+      - n1
     
     environment:
       - PORT=4000 # this is the port our node app will be listening to in the docker container, so if we direct traffic here, our node app will be accessed
@@ -18,11 +20,15 @@ services:
 
   mongo:
     image: mongo:4.4.18
+    networks:
+      - n1
    
     volumes:
       - mongo-db:/data/db #here we are saying we want to persist this data. the path is where data is stored
 
 volumes:
   mongo-db:
+networks:
+  n1:
 
   

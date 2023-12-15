@@ -7,7 +7,7 @@ services:
     build:
       context: .
       args:
-        NODE_ENV: development
+        NODE_ENV: production
     volumes:
       - ./:/app
      # - /app/node_modules
@@ -15,7 +15,7 @@ services:
       - NODE_ENV=development
     env_file:
       - ./.env
-    command: npm run dev
+    command: node index.js
   mongo:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=amschel
