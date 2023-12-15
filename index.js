@@ -17,7 +17,7 @@ const{MONGO_USERNAME,MONGO_DATABASE,MONGO_IP,MONGO_PORT,MONGO_PASSWORD}=config
 const app= express()
 app.use(cors({origin:'*'}))
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
-const PORT= process.env.PORT
+const PORT= process.env.FILE_PORT
 app.enable("trust proxy")
 
 app.use(express.json())//allows the server to parse json data
