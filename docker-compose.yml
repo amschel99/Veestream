@@ -7,7 +7,7 @@ services:
     depends_on:
       - veezo
     networks:
-      -n1
+      - n1
      
   veezo:
     build: .
