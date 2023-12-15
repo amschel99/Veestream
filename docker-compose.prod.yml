@@ -13,7 +13,7 @@ services:
   
     environment:
       - NODE_ENV=production
-      
+      - FILE_PORT=4000
       - AZURE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=nichlabs;AccountKey=3cXxsexFewMsiuTkm5yW5zd5NsQXhNhQIgiU52kOehimwIyA1AzQxZSrrVoTghQkLl7nG3DaJNrF+AStWoHSYQ==;EndpointSuffix=core.windows.net
       - MONGO_USERNAME=amschel
       - MONGO_PASSWORD=@iamLehcsma9

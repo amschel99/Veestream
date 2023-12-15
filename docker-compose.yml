@@ -11,7 +11,7 @@ services:
      
   veezo:
     build: .
-    image: docker.io/tefrotech/veezo:v1
+    image: docker.io/tefrotech/veezo:v2
     networks:
       - n1
     

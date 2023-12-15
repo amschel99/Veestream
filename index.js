@@ -42,12 +42,12 @@ app.use("/files",routerVideos)
 
 app.use(errorHandler)
 const mongoUrl2="mongodb+srv://amschel:i2SgpeVqFSpPGljD@cluster0.z5dsdnf.mongodb.net"
-const mongoUrl=`mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/${MONGO_DATABASE}?authSource=admin`
+
 connectDb(mongoUrl2).
 then(()=>{
     console.log('db connected successfully')
     app.listen(PORT, ()=>{
-        console.log(`server up and running bitch `)
+        console.log(`server up and running on ${PORT} `)
     })
 }).
 catch((e)=>{
