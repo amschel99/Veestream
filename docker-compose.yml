@@ -6,6 +6,8 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - veezo
+    networks:
+      -n1
      
   veezo:
     build: .
