@@ -9,7 +9,7 @@ services:
      
   veezo:
     build: .
-    image: veestram.azurecr.io/levelupjs-backend_veezo
+    image: docker.io/tefrotech/veezo:v1
     
     environment:
       - PORT=4000 # this is the port our node app will be listening to in the docker container, so if we direct traffic here, our node app will be accessed
