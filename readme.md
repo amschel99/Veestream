@@ -1,4 +1,4 @@
-# Node.js API for File Management and Media Manipulation
+# A Node.js API for File Management and Media Manipulation
 
 This Node.js API project allows you to upload files to azure blob storage , download files, and generate GIFs and thumbnails from videos using Azure SDKs.
 
