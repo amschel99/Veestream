@@ -33,7 +33,7 @@ res.status(200).send("Service is up")
 
 
 app.use("/generate-api-key",routerApiKey)
-app.use(validateApiKey)
+//app.use(validateApiKey)
 app.use('/file',router)
 
 app.use("/files",routerFiles)
