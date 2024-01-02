@@ -1,5 +1,5 @@
 import thumbsupply from 'thumbsupply';
-import Video from '../models/video.js';
+import Video from '../models/file.js';
 import azure from 'azure-storage';
 import fs from 'fs';
 import Account from '../models/apiKey.js';

@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 import e from 'express';
 import fs from 'fs';
 import { PassThrough } from 'stream';
-import VideoModel from '../models/video.js';
+import FileModel from '../models/file.js';
 import { config } from '../config/config.js';
 dotenv.config()
 const{AZURE_CONNECTION_STRING}=config
@@ -31,7 +31,7 @@ const upload = multer({
   },
 }).single('file');
 
-export const uploadVideo = async (req, res) => {
+export const uploadFile = async (req, res) => {
   upload(req, res, async (err) => {
     const{name}= req.body
     if (err) {
@@ -50,7 +50,7 @@ export const uploadVideo = async (req, res) => {
       if (!req.headers['content-length'] || Number(req.headers['content-length']) > fileSizeLimit) {
         return res.status(400).json({ message: 'File size limit exceeded (500MB)' });
       }
-     const numberOfVideos=await VideoModel.find({apikey})
+     const numberOfVideos=await FileModel.find({apikey})
      if(numberOfVideos>=30){
       return res.status(401).json(`maximum video limit reached, upgrade your subscription`)
 
@@ -91,12 +91,12 @@ const blockBlobClient = containerClient.getBlockBlobClient(blobName);
       const url = `${blockBlobClient.url}`;
   
       const videoData={name,url,apikey:req.headers.apikey}
-    const videoMetadata= await VideoModel.create(videoData)
+    const videoMetadata= await FileModel.create(videoData)
     const extraData={poster:`/video/${videoMetadata._id}/poster`,gif:`/video/${videoMetadata._id}/gif`,name,url}
     console.log(extraData)
     console.log(url)
     try{
-      const response= await VideoModel.findOneAndUpdate({url},extraData)
+      const response= await FileModel.findOneAndUpdate({url},extraData)
       return res.status(200).json(response);
     }
     catch(e){

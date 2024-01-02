@@ -1,22 +1,27 @@
-export const validateApiKey = async (req, res, next) => {
-    const {apikey} = req.headers
-   
-    try{
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-   
-  
-        if (!apikey) {
-          return res.status(400).json({error: 'No API key provided'});
-        }
-      
-        //if (!model.findOne({apiKey: clientKey})) {
-        //  return res.status(403).json({error: 'Invalid API key'});
-       // }
-      req.apikey=apikey
-        next();
-    }
-    catch(error){
-res.status(500).send(error.message)
-    }
-    
+dotenv.config();
+
+export const validateApiKey = (req, res, next) => {
+ 
+  const apiKey = req.headers.apikey;
+
+  if (!apiKey) {
+    return res.status(401).json({ error: 'Not Authorized - API Key missing' });
   }
+
+  try {
+
+    const decoded = jwt.verify(apiKey, process.env.VEESTREAM_JWT_SECRET);
+
+    req.user = decoded;
+
+    next();
+  } catch (error) {
+
+    return res.status(401).json({ error: 'Not Authorized - Invalid API Key. Check if your API key has expired and renew it.' });
+  }
+};
+
+

@@ -1,5 +1,5 @@
 
-import Video from '../models/video.js';
+import File from '../models/file.js';
 import dotenv from 'dotenv'
 
 
@@ -7,12 +7,12 @@ dotenv.config()
 
 
 
-export const getVideo = async (req, res) => {
+export const getFile = async (req, res) => {
   try {
     
 
 
-    const { url,apikey } = await Video.findOne({ _id: req.params.id });
+    const { url,apikey } = await File.findOne({ _id: req.params.id });
     if(req.headers.apikey!==apikey){
       return res.status(401).json(`unauthorized`)
     }

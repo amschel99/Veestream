@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const  videoSchema=new mongoose.Schema({
+const  fileSchema=new mongoose.Schema({
 
     name: {
         type: String,
@@ -26,5 +26,5 @@ const  videoSchema=new mongoose.Schema({
         required: true
       }
     })
-    const Video=mongoose.model("Video",videoSchema)
-    export default Video
+    const File=mongoose.model("Video",fileSchema)
+    export default File;

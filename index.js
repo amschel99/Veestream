@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { routerVideos } from './routes/videos.js'
-import { router } from './routes/video.js'
+import { routerFiles } from './routes/files.js'
+import { router } from './routes/file.js'
 import { routerApiKey } from './routes/apiKey.js'
 
 import { connectDb } from './db/dbConfig.js'
@@ -20,25 +20,23 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const PORT= process.env.FILE_PORT
 app.enable("trust proxy")
 
-app.use(express.json())//allows the server to parse json data
-// Send the index.html file when the root endpoint is requested
+app.use(express.json())
 
 
 
 
 
-app.use("/", (req,res)=>{
-res.status(200).send("API is working fine")
+
+app.use("/ping", (req,res)=>{
+res.status(200).send("Service is up")
 });
 
-app.use("/usecases", express.static(path.join(__dirname, ".", "client/dist")));
 
-app.use("/tos", express.static(path.join(__dirname, ".", "client/dist")));
 app.use("/generate-api-key",routerApiKey)
 app.use(validateApiKey)
 app.use('/file',router)
 
-app.use("/files",routerVideos)
+app.use("/files",routerFiles)
 
 app.use(errorHandler)
 const mongoUrl2="mongodb+srv://amschel:i2SgpeVqFSpPGljD@cluster0.z5dsdnf.mongodb.net"

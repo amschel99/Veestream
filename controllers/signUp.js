@@ -14,16 +14,21 @@ export const signUp= async (req,res)=>{
       
         console.log(req.body)
         const{email}=req.body
-        const apikey=generateApiKey()
+        
+        if(!email){
+          return res.status(409).json(`email field cannot be empty`)
+         }
+
+
+
+        const apikey=generateApiKey(email)
         const container= await createNewUniqueContainer()
         const account={apikey,container,email,password:req.body.password}
         if(container instanceof Error){
             
            return res.json(container.message)
         }
-       if(!email){
-        return res.status(409).json(`email field cannot be empty`)
-       }
+       
         //save the API key in the database 
      const registeredUser=   await accountModel.findOne({email})
       if(registeredUser ){

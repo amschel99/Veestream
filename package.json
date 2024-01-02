@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "veestream",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amschel99/milesMotorsApi.git"
+    "url": "git+https://github.com/amschel99/veestream"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/amschel99/milesMotorsApi/issues"
+    "url": "https://github.com/amschel99/veestream"
   },
-  "homepage": "https://github.com/amschel99/milesMotorsApi#readme",
+  
   "dependencies": {
     "@azure/core-http": "^2.3.1",
     "@azure/storage-blob": "^12.10.0",
